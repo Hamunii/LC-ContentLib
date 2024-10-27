@@ -1,3 +1,4 @@
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.Core.Model.Entity.Util;
 using Unity.Netcode;
 

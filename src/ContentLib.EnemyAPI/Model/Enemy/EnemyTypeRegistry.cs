@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Factories;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
 

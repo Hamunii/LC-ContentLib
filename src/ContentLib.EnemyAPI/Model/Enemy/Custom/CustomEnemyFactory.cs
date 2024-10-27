@@ -1,4 +1,5 @@
 using System;
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using UnityEngine;

@@ -1,4 +1,5 @@
 using System;
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.API.Model.Event;
 using ContentLib.EnemyAPI.Model.Enemy;
 

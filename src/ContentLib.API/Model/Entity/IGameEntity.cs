@@ -15,7 +15,7 @@ public interface IGameEntity
     /// <summary>
     /// Check determining if the entity is alive in the game world.
     /// </summary>
-    bool IsAlive { get; } //TODO find out what type param these are.
+    bool IsAlive { get; }
     /// <summary>
     /// The current health of the enemy.
     /// </summary>

@@ -1,6 +1,6 @@
-using ContentLib.API.Model.Entity;
+using ContentLib.EnemyAPI.Model.Enemy;
 
-namespace ContentLib.EnemyAPI.Model.Enemy;
+namespace ContentLib.API.Model.Entity.Enemy;
 /// <summary>
 /// Interface representing the general functionality of an Enemy Game Entity within the gameworld. 
 /// </summary>

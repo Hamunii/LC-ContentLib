@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using ContentLib.API.Model.Event;
 using ContentLib.Core.Loader;
 using ContentLib.EnemyAPI.Model.Enemy.Custom;
 using ContentLib.EnemyAPI.Patches;
@@ -23,16 +24,36 @@ public class Plugin : BaseUnityPlugin
         RoundPatches.Init();
         EnemyAIPatches.Init();
         BrackenPatches.Init();
+        //TODO I think it would best to just have an "Initialize Patches" method? 
+        OldBirdPatches.Init();
         s_log.LogInfo($"Plugin {LCMPluginInfo.PLUGIN_NAME} is loaded!");
         TestListener testListener = new();
+        GameEventManager.Instance.RegisterListener(testListener);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // We might need a project purely for tests. Leaving this as a reminder for later
         // as we could accidentally break this whole system and not realize for a while.
         //EnemyDefinition myEnemy = ScriptableObject.CreateInstance<EnemyDefinition>();
-       // myEnemy.name = "testEnemyDefinition";
+        // myEnemy.name = "testEnemyDefinition";
 
         // EnemyDefinition.Callbacks.AddOnBeforeRegister(myMod, "testEnemyDefinition",
         //     (enemy) => s_log.LogInfo("I was called! " + enemy.name));
 
-       // myEnemy.Register();
+        // myEnemy.Register();
     }
 }

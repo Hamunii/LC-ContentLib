@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.API.Model.Mods;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;

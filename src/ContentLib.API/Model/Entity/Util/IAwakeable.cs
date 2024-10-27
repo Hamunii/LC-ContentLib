@@ -4,7 +4,7 @@ namespace ContentLib.API.Model.Entity.Util;
 
 /// <summary>
 /// Interface Representing the general functionality of an instance that is "Awakeable", i.e. starts the game in a
-/// dorment state, and then "awakes". 
+/// dormant state, and then "awakes". 
 /// </summary>
 public interface IAwakeable
 {

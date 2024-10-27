@@ -1,4 +1,5 @@
 using System;
+using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.Core.Utils;
 
 namespace ContentLib.EnemyAPI.Model.Enemy.Factories;
