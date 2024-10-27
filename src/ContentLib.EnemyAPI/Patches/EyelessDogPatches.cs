@@ -22,12 +22,24 @@ public class EyelessDogPatches
     private class LocalEyelessDog(MouthDogAI mouthDogAI): IEyelessDog
     {
         public ulong Id => mouthDogAI.NetworkObjectId;
-        public bool IsAlive { get; }
-        public int Health { get; }
-        public Vector3 Position { get; }
+        public bool IsAlive => !mouthDogAI.isEnemyDead;
+        public int Health => mouthDogAI.enemyHP;
+        public Vector3 Position => mouthDogAI.gameObject.transform.position;
         public IEnemyProperties EnemyProperties { get; }
-        public bool IsSpawned { get; }
+        public bool IsSpawned => mouthDogAI.IsSpawned;
         public bool IsHostile { get; }
         public bool IsChasing { get; }
+        public void Kill() => throw new System.NotImplementedException();
+        public bool isLunging { get; }
+        public int suspicionLevel { get; }
+        public Vector3 GuessedSearchPosition { get; }
+        public Vector3 AbsoluteSearchPosition { get; }
+        public void Lunge() => throw new System.NotImplementedException();
+
+        public void GrabDeadBody(DeadBodyInfo body) => throw new System.NotImplementedException();
+
+        public void DropDeadBody() => throw new System.NotImplementedException();
+
+        public void AlertOtherDogs() => throw new System.NotImplementedException();
     }
 }
