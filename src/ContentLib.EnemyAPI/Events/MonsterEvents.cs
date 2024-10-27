@@ -51,3 +51,12 @@ public abstract class MonsterSpawnEvent : IMonsterEvents
     public bool IsCancelled { get; set; }
 }
 
+/// <summary>
+/// Event triggered when an IWakeable Enemy is awakened. 
+/// </summary>
+public abstract class WakeableMonsterWakeEvent : IMonsterEvents
+{
+    public bool IsCancelled { get; set; }
+    public abstract IEnemy Enemy { get; }
+}
+

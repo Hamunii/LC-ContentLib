@@ -16,14 +16,11 @@ public interface IAwakeable
     /// <summary>
     /// The prefab representing the "Awake" state of the instance.
     /// </summary>
-    GameObject AwakePrefab { get; }
+    GameObject? AwakePrefab { get; }
     
     /// <summary>
     /// The current "Awake" status of the instance. 
     /// </summary>
     bool IsAwake { get; set; }
-    
-
-    
-    
+       
 }
