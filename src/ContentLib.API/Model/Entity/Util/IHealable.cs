@@ -13,5 +13,11 @@ public interface IHealable
     /// <param name="healDurationInSeconds">The amount of time it takes to fully heal the instance to the given amount,
     /// in seconds.</param>>
     /// 
-    void Heal(float healAmount, int healDurationInSeconds);
+    void HealOverTime(int healAmount, float healDurationInSeconds);
+
+    /// <summary>
+    /// Heal the instance for the specified amount, instantly. 
+    /// </summary>
+    /// <param name="healAmount">The amount to heal the instance by.</param>
+    void Heal(int healAmount);
 }
