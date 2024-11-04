@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace ContentLib.Core.Model.Entity.Util;
 
 /// <summary>
@@ -8,5 +10,9 @@ public interface IKillable
     /// <summary>
     /// Kills the subject.
     /// </summary>
-    void Kill();
+    void Kill(Vector3 bodyVelocity,
+        bool spawnBody = true,
+        CauseOfDeath causeOfDeath = CauseOfDeath.Unknown,
+        int deathAnimation = 0,
+        Vector3 positionOffset = default (Vector3));
 }

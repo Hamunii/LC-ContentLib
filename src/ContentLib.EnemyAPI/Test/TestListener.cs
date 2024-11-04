@@ -1,5 +1,6 @@
 using ContentLib.Core.Model.Event;
 using ContentLib.Core.Model.Event.Listener;
+using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
 using UnityEngine;
@@ -16,5 +17,11 @@ public class TestListener : IListener
         {
             Debug.Log($"[$LC-ContentLib] The player has been killed by a Braken with id: {bracken.Id}");
         }
+    }
+
+    [EventDelegate]
+    private void OnMonsterSpawn(PlayerSpawnEvent playerSpawnEvent)
+    {
+        playerSpawnEvent.Player.TeleportToShip();
     }
 }
