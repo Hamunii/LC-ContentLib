@@ -23,6 +23,7 @@ public class Plugin : BaseUnityPlugin
         RoundPatches.Init();
         EnemyAIPatches.Init();
         BrackenPatches.Init();
+        PlayerPatches.Init();
         s_log.LogInfo($"Plugin {LCMPluginInfo.PLUGIN_NAME} is loaded!");
         TestListener testListener = new();
         // We might need a project purely for tests. Leaving this as a reminder for later
