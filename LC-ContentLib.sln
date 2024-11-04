@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.EnemyAPI", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.API", "src\ContentLib.API\ContentLib.API.csproj", "{D30FD967-0F65-4461-8725-1A107683872E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.Item_Module", "src\ContentLib.Item_Module\ContentLib.Item_Module.csproj", "{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{D30FD967-0F65-4461-8725-1A107683872E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D30FD967-0F65-4461-8725-1A107683872E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D30FD967-0F65-4461-8725-1A107683872E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
