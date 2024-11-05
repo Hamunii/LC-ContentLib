@@ -3,7 +3,7 @@
   <PropertyGroup>
     <AssemblyName>com.github.lc-contentlib.itemmodule</AssemblyName>
     <Description>The Item Module of ContentLib.</Description>
-    <Product>ContentLib.EnemyAPI</Product>
+    <Product>ContentLib.Item_Module</Product>
     <Version>0.1.0</Version>
   </PropertyGroup>
 
