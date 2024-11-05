@@ -1,12 +1,17 @@
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
+using UnityEngine;
 
 namespace ContentLib.Item_Module.Events;
-
-public class ItemEvents
+public interface IItemEvent : IGameEvent
 {
-    public interface IItemEvent : IGameEvent
-    {
-        IGameItem Item { get; }
-    }
+    Vector3 Position { get; }
+    IGameItem Item { get; }
+}
+
+public abstract class OnItemActivationEvent() : IItemEvent
+{
+    public abstract Vector3 Position { get; }
+    public abstract IGameItem Item { get; }
+    public bool IsCancelled { get; set; }
 }
