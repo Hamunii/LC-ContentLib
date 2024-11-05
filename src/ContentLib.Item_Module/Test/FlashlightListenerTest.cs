@@ -8,13 +8,12 @@ namespace ContentLib.Item_Module.Test;
 public class FlashlightListenerTest : IListener
 { 
     [EventDelegate]
-    private void OnItemActivate(OnItemActivationEvent itemActivationEvent)
+    private void OnItemActivate(ItemActivationEvent itemActivationEvent)
     {
         CLLogger.Instance.Log($"OnItemActivate: {itemActivationEvent}");
         if (itemActivationEvent.Item is IFlashlight flashlight)
         {
-            //CLLogger.Instance.Log($"A flashlight was turned on with ID: {flashlight.Id}");
-            Landmine.SpawnExplosion(flashlight.Location,true,default,default,default,1F);
+            CLLogger.Instance.Log($"OnItemActivate: {itemActivationEvent}");
         }
     }
 }

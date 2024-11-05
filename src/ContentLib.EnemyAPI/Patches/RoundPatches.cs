@@ -5,7 +5,7 @@ namespace ContentLib.EnemyAPI.Patches;
 
 public class RoundPatches
 {
-    //TODO Hamunii pop ur patch here, but remebmer to branch off
+    //TODO Hamunii pop ur patch here, but remember to branch off
     public static void Init()
     {
         Debug.Log("Patching Round Methods");

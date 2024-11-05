@@ -22,6 +22,7 @@ public class Plugin : BaseUnityPlugin
     private void InitPatches()
     { 
         CLLogger.Instance.Log("Initializing Item Patches");
+        ItemRoundPatches.Init();
         FlashlightPatches.Init();
     }
 }

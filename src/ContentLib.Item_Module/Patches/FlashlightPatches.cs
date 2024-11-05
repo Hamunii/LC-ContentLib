@@ -23,8 +23,8 @@ public class FlashlightPatches
         orig(self, on);
         if (on)
         {
-            OnItemActivationEvent activationEvent =
-                new FlashLightActivateEvent((IFlashlight)ItemManager.Instance.GetItemById(self.NetworkObjectId));
+            ItemActivationEvent activationEvent =
+                new FlashLightActivateEvent((IFlashlight)ItemManager.Instance.GetItem(self.NetworkObjectId));
             GameEventManager.Instance.Trigger(activationEvent);
         }
     }
@@ -53,12 +53,12 @@ public class FlashlightPatches
         public void Activate()
         {
             flashlightItem.SwitchFlashlight(true);
-            OnItemActivationEvent activationEvent = new FlashLightActivateEvent(this);
+            ItemActivationEvent activationEvent = new FlashLightActivateEvent(this);
             GameEventManager.Instance.Trigger(activationEvent);
         }
     }
 
-    private class FlashLightActivateEvent(IFlashlight flashlight) : OnItemActivationEvent
+    private class FlashLightActivateEvent(IFlashlight flashlight) : ItemActivationEvent
     {
         public override Vector3 Position => flashlight.Location;
         public override IGameItem Item => flashlight;
