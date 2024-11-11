@@ -25,21 +25,22 @@ public class EyelessDogPatches
         public bool IsAlive => !mouthDogAI.isEnemyDead;
         public int Health => mouthDogAI.enemyHP;
         public Vector3 Position => mouthDogAI.gameObject.transform.position;
+        // TODO: Left empty for now
         public IEnemyProperties EnemyProperties { get; }
         public bool IsSpawned => mouthDogAI.IsSpawned;
-        public bool IsHostile { get; }
-        public bool IsChasing { get; }
-        public void Kill() => throw new System.NotImplementedException();
-        public bool isLunging { get; }
-        public int suspicionLevel { get; }
-        public Vector3 GuessedSearchPosition { get; }
-        public Vector3 AbsoluteSearchPosition { get; }
-        public void Lunge() => throw new System.NotImplementedException();
+        public bool IsHostile => true;
+        public bool IsChasing => mouthDogAI.hasEnteredChaseModeFully;
+        public void Kill() => mouthDogAI.KillEnemy();
+        public bool isLunging => mouthDogAI.inLunge;
+        public int SuspicionLevel => mouthDogAI.suspicionLevel;
+        public Vector3 GuessedSearchPosition => mouthDogAI.noisePositionGuess;
+        public Vector3 AbsoluteSearchPosition => mouthDogAI.lastHeardNoisePosition;
+        public void Lunge() => mouthDogAI.EnterLunge();
+        public void GrabDeadBody(DeadBodyInfo body) => mouthDogAI.TakeBodyInMouth(body);
+        public void DropDeadBody() => mouthDogAI.DropCarriedBody();
+        public void AlertOtherDogs() => mouthDogAI.CallAllDogsWithHowl();
+        public void DetectNoise(Vector3 noisePosition, float noiseLoudness, int timesNoisePlayedInOneSpot = 0, int noiseID = 0) => mouthDogAI.DetectNoise(noisePosition, noiseLoudness, timesNoisePlayedInOneSpot, noiseID);
 
-        public void GrabDeadBody(DeadBodyInfo body) => throw new System.NotImplementedException();
-
-        public void DropDeadBody() => throw new System.NotImplementedException();
-
-        public void AlertOtherDogs() => throw new System.NotImplementedException();
+        public void ReactToOtherDogHowl(Vector3 howlPosition) => mouthDogAI.ReactToOtherDogHowl(howlPosition);
     }
 }
