@@ -5,28 +5,37 @@ using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Events;
 
+/// <summary>
+/// Abstract representation of an event when an Eyeless Dog hears a noise
+/// </summary>
 public abstract class DogHearsNoiseEvent : IMonsterEvents
 {
-    public bool IsCancelled { get; set; }
-    public IEnemy Enemy { get; }
-    public Vector3 NoisePosition { get; }
-    public float NoiseLoudness { get; }
-    public int TimesNoisePlayedInOneSpot { get; }
-    public int NoiseID { get; }
+    public abstract bool IsCancelled { get; set; }
+    public abstract IEnemy Enemy { get; }
+    public abstract Vector3 NoisePosition { get; }
+    public abstract float NoiseLoudness { get; }
+    public abstract int TimesNoisePlayedInOneSpot { get; }
+    public abstract int NoiseID { get; }
 }
 
-public abstract class DogHearsAlertEvent : IMonsterEvents
+/// <summary>
+/// Abstract representation of an event when an Eyeless Dog alerts all other Dogs to their location
+/// </summary>
+public abstract class DogAlertEvent : IMonsterEvents
 {
-    public bool IsCancelled { get; set; }
-    public IEnemy Enemy { get; }
-    public Vector3 AlertPosition { get; }
-    public IEyelessDog AlertingDog { get; }
+    public abstract bool IsCancelled { get; set; }
+    public abstract IEnemy Enemy { get; }
+    public abstract Vector3 AlertPosition { get; }
 }
 
+/// <summary>
+/// Abstract representation of an event when an Eyeless Dog lunges 
+/// </summary>
 public abstract class DogLungeEvent : IMonsterEvents
 {
-    public bool IsCancelled { get; set; }
-    public IEnemy Enemy { get; }
-    public Quaternion LungeVector { get; }
+    
+    public abstract Quaternion LungeVector { get; }
+    public abstract bool IsCancelled { get; set; }
+    public abstract IEnemy Enemy { get; }
 }
 
