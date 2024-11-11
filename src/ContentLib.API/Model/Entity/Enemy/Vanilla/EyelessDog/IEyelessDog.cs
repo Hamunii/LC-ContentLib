@@ -19,7 +19,7 @@ public interface IEyelessDog : IEnemy, IKillable
     /// Integer representing the current suspicion level of this Eyeless Dog.
     /// This determines the Dog's AI state.
     /// </summary>
-    int SuspicionLevel { get; }
+    int SuspicionLevel { get; set; }
     /// <summary>
     /// Vector3 Position of where the Eyeless Dog guesses the source of a sound is.
     /// This will be where the dog will lunge toward.
@@ -72,9 +72,9 @@ public interface IEyelessDog : IEnemy, IKillable
     /// Causes this Eyeless Dog to immediately charge toward the given position as if it heard a sound.
     /// This is usually called whenever another Eyeless Dog uses their own AlertOtherDogs() method.
     /// </summary>
-    /// <param name="howlPosition"></param>
+    /// <param name="howlPosition">The Vector3 position of the Alerting Dog</param>
     /// <seealso cref="AlertOtherDogs()">AlertOtherDogs()</seealso>
-    void ReactToOtherDogHowl(Vector3 howlPosition);
+    void ReactToDogAlert(Vector3 howlPosition);
 
     #endregion
 }

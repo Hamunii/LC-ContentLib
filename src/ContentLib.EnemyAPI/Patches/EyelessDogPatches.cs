@@ -32,7 +32,11 @@ public class EyelessDogPatches
         public bool IsChasing => mouthDogAI.hasEnteredChaseModeFully;
         public void Kill() => mouthDogAI.KillEnemy();
         public bool isLunging => mouthDogAI.inLunge;
-        public int SuspicionLevel => mouthDogAI.suspicionLevel;
+        public int SuspicionLevel
+        {
+            get => mouthDogAI.suspicionLevel;
+            set => mouthDogAI.suspicionLevel = value;
+        }
         public Vector3 GuessedSearchPosition => mouthDogAI.noisePositionGuess;
         public Vector3 AbsoluteSearchPosition => mouthDogAI.lastHeardNoisePosition;
         public void Lunge() => mouthDogAI.EnterLunge();
@@ -41,6 +45,6 @@ public class EyelessDogPatches
         public void AlertOtherDogs() => mouthDogAI.CallAllDogsWithHowl();
         public void DetectNoise(Vector3 noisePosition, float noiseLoudness, int timesNoisePlayedInOneSpot = 0, int noiseID = 0) => mouthDogAI.DetectNoise(noisePosition, noiseLoudness, timesNoisePlayedInOneSpot, noiseID);
 
-        public void ReactToOtherDogHowl(Vector3 howlPosition) => mouthDogAI.ReactToOtherDogHowl(howlPosition);
+        public void ReactToDogAlert(Vector3 howlPosition) => mouthDogAI.ReactToOtherDogHowl(howlPosition);
     }
 }
