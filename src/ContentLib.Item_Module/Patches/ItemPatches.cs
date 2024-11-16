@@ -18,6 +18,7 @@ public class ItemPatches
     {
         On.GameNetcodeStuff.PlayerControllerB.GrabObjectClientRpc += PlayerControllerBOnGrabObjectClientRpc; 
         On.GameNetcodeStuff.PlayerControllerB.PlaceObjectClientRpc += PlayerControllerBOnPlaceObjectClientRpc;
+
         //TODO Figure out why this doesnt trigger for non-host clients. 
         On.GrabbableObject.DiscardItemOnClient += GrabbableObjectOnDiscardItemOnClient;
         On.GrabbableObject.DiscardItemClientRpc += GrabbableObjectOnDiscardItemClientRpc;
@@ -33,34 +34,6 @@ public class ItemPatches
             return;
         GameEventManager.Instance.Trigger(new BaseItemDropEvent(self, droppingPlayer));
     }
-
-    private static void GrabbableObjectOnDiscardItemOnClient(On.GrabbableObject.orig_DiscardItemOnClient orig, GrabbableObject self)
-    {
-        GameNetcodeStuff.PlayerControllerB droppingPlayer = self.playerHeldBy;
-        CLLogger.Instance.Log(droppingPlayer == null
-            ? "The object's dropping player is null."
-            : $"Player: {droppingPlayer.name} dropped item");
-        orig(self);
-        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
-            return;
-        GameEventManager.Instance.Trigger(new BaseItemDropEvent(self,droppingPlayer));
-        CLLogger.Instance.Log($"Item Dropped {self.name}");
-
-    }
-
-    //TODO fully works but needs to be a place event instead... maybe...
-    private static void PlayerControllerBOnPlaceObjectClientRpc(PlayerControllerB.orig_PlaceObjectClientRpc orig, GameNetcodeStuff.PlayerControllerB self, NetworkObjectReference parentobjectreference, Vector3 placepositionoffset, bool matchrotationofparent, NetworkObjectReference grabbedobject)
-    {
-        orig(self, parentobjectreference, placepositionoffset, matchrotationofparent, grabbedobject);
-        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
-            return;
-        if (!grabbedobject.TryGet(out NetworkObject networkObject))
-            return;
-        GrabbableObject droppedObject = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
-
-        GameEventManager.Instance.Trigger(new BaseItemDropEvent(droppedObject,self));
-    }
-
     private static void PlayerControllerBOnGrabObjectClientRpc(PlayerControllerB.orig_GrabObjectClientRpc orig, GameNetcodeStuff.PlayerControllerB self, bool grabvalidated, NetworkObjectReference grabbedobject)
     {
         orig(self, grabvalidated, grabbedobject);
@@ -78,6 +51,34 @@ public class ItemPatches
       
         GameEventManager.Instance.Trigger(new BaseItemPickupEvent(grabbedObjectActual, self));
     }
+    private static void GrabbableObjectOnDiscardItemOnClient(On.GrabbableObject.orig_DiscardItemOnClient orig, GrabbableObject self)
+    {
+        GameNetcodeStuff.PlayerControllerB droppingPlayer = self.playerHeldBy;
+        CLLogger.Instance.Log(droppingPlayer == null
+            ? "The object's dropping player is null."
+            : $"Player: {droppingPlayer.name} dropped item");
+        orig(self);
+        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
+            return;
+        GameEventManager.Instance.Trigger(new BaseItemDropEvent(self,droppingPlayer));
+        CLLogger.Instance.Log($"Item Dropped {self.name}");
+
+    }
+ 
+    //TODO fully works but needs to be a place event instead... maybe...
+    private static void PlayerControllerBOnPlaceObjectClientRpc(PlayerControllerB.orig_PlaceObjectClientRpc orig, GameNetcodeStuff.PlayerControllerB self, NetworkObjectReference parentobjectreference, Vector3 placepositionoffset, bool matchrotationofparent, NetworkObjectReference grabbedobject)
+    {
+        
+        orig(self, parentobjectreference, placepositionoffset, matchrotationofparent, grabbedobject);
+        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
+            return;
+        if (!grabbedobject.TryGet(out NetworkObject networkObject))
+            return;
+        GrabbableObject droppedObject = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
+
+        GameEventManager.Instance.Trigger(new BaseItemDropEvent(droppedObject,self));
+    }
+    
 
 
     private class BaseItemPickupEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB playerController) : ItemPickUpEvent
