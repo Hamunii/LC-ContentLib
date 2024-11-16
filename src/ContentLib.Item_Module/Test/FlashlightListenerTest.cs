@@ -13,7 +13,7 @@ public class FlashlightListenerTest : IListener
         CLLogger.Instance.Log($"OnItemActivate: {itemActivationEvent}");
         if (itemActivationEvent.Item is IFlashlight flashlight)
         {
-            CLLogger.Instance.Log($"OnItemActivate: {itemActivationEvent}");
+            flashlight.Weight = 10;
         }
     }
 }

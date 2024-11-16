@@ -1,3 +1,4 @@
+using System.Reflection;
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
@@ -17,17 +18,30 @@ public class ItemPatches
     {
         On.GameNetcodeStuff.PlayerControllerB.GrabObjectClientRpc += PlayerControllerBOnGrabObjectClientRpc; 
         On.GameNetcodeStuff.PlayerControllerB.DropAllHeldItems += PlayerControllerBOnDropAllHeldItems;
-        On.GameNetcodeStuff.PlayerControllerB.DropItemAheadOfPlayer += PlayerControllerBOnDropItemAheadOfPlayer;
+        On.GameNetcodeStuff.PlayerControllerB.DiscardHeldObject += PlayerControllerBOnDiscardHeldObject;
+        On.GrabbableObject.DiscardItemClientRpc += GrabbableObjectOnDiscardItemClientRpc;
     }
 
-    private static Vector3 PlayerControllerBOnDropItemAheadOfPlayer(PlayerControllerB.orig_DropItemAheadOfPlayer orig, GameNetcodeStuff.PlayerControllerB self)
+    private static void GrabbableObjectOnDiscardItemClientRpc(On.GrabbableObject.orig_DiscardItemClientRpc orig, GrabbableObject self)
     {
-        GrabbableObject itemToDrop = self.currentlyHeldObject;
-        GameEventManager.Instance.Trigger(new BaseItemDropEvent(itemToDrop,self));
-        return orig(self);
+        //TODO this needs a lot more logic, boomboxes dont work for some reason, and placements of objects still trigger drop events too.
+        orig(self);
+        
+        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
+            return;
+        GameEventManager.Instance.Trigger(new BaseItemDropEvent(self,null));
+        CLLogger.Instance.Log($"The Player dropped {self.name}.");
+        
     }
 
-    private static void PlayerControllerBOnDropAllHeldItems(PlayerControllerB.orig_DropAllHeldItems orig, GameNetcodeStuff.PlayerControllerB self, bool itemsfall, bool disconnecting)
+    private static void PlayerControllerBOnDiscardHeldObject(PlayerControllerB.orig_DiscardHeldObject orig, GameNetcodeStuff.PlayerControllerB self, bool placeobject, NetworkObject parentobjectto, Vector3 placeposition, bool matchrotationofparent)
+    {
+      orig(self, placeobject, parentobjectto, placeposition, matchrotationofparent);
+      if (!placeobject)
+          return;
+    }
+
+    private static void PlayerControllerBOnDropAllHeldItems(PlayerControllerB.orig_DropAllHeldItems orig, GameNetcodeStuff.PlayerControllerB? self, bool itemsfall, bool disconnecting)
     {
         GameEventManager gameEventManager = GameEventManager.Instance;
         foreach (GrabbableObject itemToDrop in self.ItemSlots)
@@ -43,15 +57,21 @@ public class ItemPatches
     private static void PlayerControllerBOnGrabObjectClientRpc(PlayerControllerB.orig_GrabObjectClientRpc orig, GameNetcodeStuff.PlayerControllerB self, bool grabvalidated, NetworkObjectReference grabbedobject)
     {
         orig(self, grabvalidated, grabbedobject);
-        
+
         if (!grabbedobject.TryGet(out NetworkObject networkObject))
         {
             CLLogger.Instance.Log($"[ItemPatches] GrabObjectClientRpc returned no network object");
+            return;
         }
-        GrabbableObject grabbedObjectActual = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
+
+        if (self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Client)
+            return;
         
-        GameEventManager.Instance.Trigger(new BaseItemPickupEvent(grabbedObjectActual,self));
+        GrabbableObject grabbedObjectActual = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
+      
+        GameEventManager.Instance.Trigger(new BaseItemPickupEvent(grabbedObjectActual, self));
     }
+
 
     private class BaseItemPickupEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB playerController) : ItemPickUpEvent
     {
@@ -60,7 +80,7 @@ public class ItemPatches
         public override IGameEntity GrabbingEntity => EnemyManager.Instance.GetEnemy(playerController.NetworkObjectId);
     }
 
-    private class BaseItemDropEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB playerController): ItemDroppedEvent
+    private class BaseItemDropEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB? playerController): ItemDroppedEvent
     {
         public override Vector3 Position => item.transform.position;
         public override IGameItem Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
