@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="../ContentLib.Core/ContentLib.Core.csproj" Private="false" />
     <ProjectReference Include="..\ContentLib.API\ContentLib.API.csproj" />
+    <ProjectReference Include="../ContentLib.EnemyAPI/ContentLib.EnemyAPI.csproj" private = "false"/>
   </ItemGroup>
 
 </Project>

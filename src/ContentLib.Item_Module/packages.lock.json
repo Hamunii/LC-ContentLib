@@ -390,6 +390,16 @@
           "UnityEngine.Modules": "[2023.2.4, )"
         }
       },
+      "com.github.lc-contentlib.enemyapi": {
+        "type": "Project",
+        "dependencies": {
+          "BepInEx.Core": "[5.4.*, )",
+          "ContentLib.API": "[1.0.0, )",
+          "LethalCompany.GameLibs.Steam": "[56.0.1-ngd.0, )",
+          "UnityEngine.Modules": "[2023.2.4, )",
+          "com.github.lc-contentlib.core": "[0.1.0, )"
+        }
+      },
       "contentlib.api": {
         "type": "Project",
         "dependencies": {
