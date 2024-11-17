@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ContentLib.Core.Model.Event.Listener;
+using Dissonance;
 using UnityEngine;
 
 namespace ContentLib.API.Model.Event
@@ -97,6 +98,7 @@ namespace ContentLib.API.Model.Event
         /// Attribute are not correctly formatted.</exception>
         public void RegisterListener(IListener listener)
         {
+            Debug.Log($"GameEventManager::RegisterListener {listener.GetType()}");
             var listenerType = listener.GetType();
             var methodsWithAttribute = listenerType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(method => method.GetCustomAttributes(typeof(EventDelegateAttribute), true).Any());
