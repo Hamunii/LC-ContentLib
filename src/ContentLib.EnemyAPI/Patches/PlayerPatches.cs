@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Events;
-using IL.GameNetcodeStuff;
 using UnityEngine;
 using PlayerControllerB = GameNetcodeStuff.PlayerControllerB;
 
@@ -54,8 +52,7 @@ public class PlayerPatches
             }
             PlayerControllerB currentPlayer = StartOfRound.Instance.mapScreen.targetedPlayer;
             StartOfRound.Instance.mapScreen.targetedPlayer = playerController;
-            IEnumerator beamUpPlayer = Teleporter.beamUpPlayer();
-            playerController.StartCoroutine(beamUpPlayer);
+            Teleporter.PressTeleportButtonServerRpc();
             StartOfRound.Instance.mapScreen.targetedPlayer = currentPlayer;
         }
 

@@ -1,10 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
-using ContentLib.Core.Loader;
-using ContentLib.EnemyAPI.Model.Enemy.Custom;
+using ContentLib.API.Model.Event;
 using ContentLib.EnemyAPI.Patches;
 using ContentLib.EnemyAPI.Test;
-using UnityEngine;
 
 namespace ContentLib.EnemyAPI;
 
@@ -26,6 +24,7 @@ public class Plugin : BaseUnityPlugin
         PlayerPatches.Init();
         s_log.LogInfo($"Plugin {LCMPluginInfo.PLUGIN_NAME} is loaded!");
         TestListener testListener = new();
+        GameEventManager.Instance.RegisterListener(testListener);
         // We might need a project purely for tests. Leaving this as a reminder for later
         // as we could accidentally break this whole system and not realize for a while.
         //EnemyDefinition myEnemy = ScriptableObject.CreateInstance<EnemyDefinition>();

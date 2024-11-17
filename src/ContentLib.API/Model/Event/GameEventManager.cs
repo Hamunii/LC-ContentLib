@@ -42,8 +42,8 @@ namespace ContentLib.API.Model.Event
         /// <typeparam name="TEvent">The type parameter of IGameEvent child to handle.</typeparam>
         public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
         {
-            Type? eventType = typeof(TEvent).BaseType;
-
+            Type eventType = typeof(TEvent);
+            Debug.Log($"Subscribing to {eventType}");
             if (_eventHandlers.TryGetValue(eventType, out var existingHandler))
             {
                 _eventHandlers[eventType] = Delegate.Combine(existingHandler, handler);
@@ -109,21 +109,34 @@ namespace ContentLib.API.Model.Event
                     throw new InvalidOperationException($"Method {method.Name} does not have exactly one parameter.");
                 }
                 var eventType = parameters[0].ParameterType;
-                
+
                 if (!typeof(IGameEvent).IsAssignableFrom(eventType))
+                {
                     throw new InvalidOperationException($"Method {method.Name} parameter is not a game event!");
-                
+                }
+
+                // Dynamically resolve the Subscribe<T> method for the specific event type
                 var subscribeMethod = typeof(GameEventManager).GetMethod(nameof(Subscribe))
                     ?.MakeGenericMethod(eventType);
 
-                // I know it's unlikely, but it's a nice hail mary check. 
                 if (subscribeMethod == null)
                 {
                     throw new InvalidOperationException($"Unable to find Subscribe method for event type {eventType.Name}.");
                 }
+
+                // Create the Action<T> delegate dynamically
                 var actionDelegate = Delegate.CreateDelegate(typeof(Action<>).MakeGenericType(eventType), listener, method);
+                if (actionDelegate == null)
+                {
+                    throw new InvalidOperationException($"Failed to create delegate for method {method.Name} with event type {eventType.FullName}.");
+                }
+
+
+
+                // Invoke the Subscribe<T> method
                 subscribeMethod.Invoke(this, new object[] { actionDelegate });
             }
+
         }
     }
 }

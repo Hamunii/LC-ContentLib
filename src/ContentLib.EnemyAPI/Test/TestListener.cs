@@ -1,4 +1,3 @@
-using ContentLib.Core.Model.Event;
 using ContentLib.Core.Model.Event.Listener;
 using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;

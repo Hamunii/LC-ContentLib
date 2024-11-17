@@ -1,5 +1,4 @@
 using ContentLib.API.Model.Entity.Util;
-using ContentLib.Core.Model.Entity.Util;
 
 namespace ContentLib.API.Model.Entity.Player;
 
