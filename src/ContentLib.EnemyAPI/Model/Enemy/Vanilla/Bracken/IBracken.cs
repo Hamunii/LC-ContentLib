@@ -1,4 +1,4 @@
-using ContentLib.Core.Model.Entity.Util;
+using ContentLib.API.Model.Entity.Util;
 using Unity.Netcode;
 
 namespace ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;

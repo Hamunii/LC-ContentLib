@@ -1,6 +1,6 @@
 using System;
 using ContentLib.API.Model.Event;
-using ContentLib.Core.Model.Event;
+using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
 using UnityEngine;
@@ -60,7 +60,11 @@ public class BrackenPatches
         public void ResetStealthTimerServerRpc(int playerObj) => brackenAi.ResetFlowermanStealthTimerServerRpc(playerObj);
 
         public void ResetStealthTimerClientRpc(int playerObj) => brackenAi.ResetFlowermanStealthClientRpc(playerObj);
-        public void Kill() => throw new NotImplementedException();
+
+
+        public void Kill(Vector3 bodyVelocity, bool spawnBody = true, CauseOfDeath causeOfDeath = CauseOfDeath.Unknown,
+            int deathAnimation = 0, Vector3 positionOffset = default(Vector3)) =>
+            brackenAi.KillEnemy();
     }
 
     private class BrackenProperties(FlowermanAI flowermanAI) : IEnemyProperties
