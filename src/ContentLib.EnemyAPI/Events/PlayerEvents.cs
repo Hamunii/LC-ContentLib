@@ -16,3 +16,10 @@ namespace ContentLib.EnemyAPI.Events;
 
         public abstract IPlayer Player { get; }
     }
+
+    public abstract class PlayerJumpEvent : IPlayerEvent
+    {
+        public abstract IPlayer Player { get; }
+
+        public bool IsCancelled { get; set; }
+    }

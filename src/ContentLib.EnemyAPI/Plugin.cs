@@ -22,6 +22,7 @@ public class Plugin : BaseUnityPlugin
         EnemyAIPatches.Init();
         BrackenPatches.Init();
         PlayerPatches.Init();
+        TeleporterPatches teleporterPatches = TeleporterPatches.Instance;
         s_log.LogInfo($"Plugin {LCMPluginInfo.PLUGIN_NAME} is loaded!");
         TestListener testListener = new();
         GameEventManager.Instance.RegisterListener(testListener);

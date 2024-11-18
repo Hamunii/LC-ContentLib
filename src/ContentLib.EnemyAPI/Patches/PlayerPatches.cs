@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Events;
+using Unity.Netcode;
 using UnityEngine;
 using PlayerControllerB = GameNetcodeStuff.PlayerControllerB;
 
@@ -13,6 +15,34 @@ public class PlayerPatches
     public static void Init()
     {
         On.GameNetcodeStuff.PlayerControllerB.Start += PlayerControllerBOnStart;
+        On.GameNetcodeStuff.PlayerControllerB.PlayerJumpedServerRpc += PlayerControllerBOnPlayerJumpedServerRpc;
+        On.GameNetcodeStuff.PlayerControllerB.PlayerJumpedClientRpc += PlayerControllerBOnPlayerJumpedClientRpc;
+        On.GameNetcodeStuff.PlayerControllerB.PlayerJump += PlayerControllerBOnPlayerJump;
+    }
+
+    private static IEnumerator PlayerControllerBOnPlayerJump(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJump orig, PlayerControllerB self)
+    {
+        IEnumerator result = orig(self);
+        CLLogger.Instance.Log("Player Jumped neither client or server");
+        GameEventManager.Instance.Trigger(new BasePlayerJumpEvent(new BasePlayerInstance(self)));
+     
+        return result;
+    }
+
+    private static void PlayerControllerBOnPlayerJumpedClientRpc(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJumpedClientRpc orig, PlayerControllerB self)
+    {
+        orig(self);
+        CLLogger.Instance.Log("Player Jumped Client");
+    }
+
+    private static void PlayerControllerBOnPlayerJumpedServerRpc(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJumpedServerRpc orig, PlayerControllerB self)
+    {
+        var isServerExec = self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server;
+        orig(self);
+        CLLogger.Instance.Log("PlayerControllerBOnPlayerJumpedServerRpc");
+        if (!isServerExec)
+            return;
+        GameEventManager.Instance.Trigger(new BasePlayerJumpEvent(new BasePlayerInstance(self)));
     }
 
     private static void PlayerControllerBOnStart(On.GameNetcodeStuff.PlayerControllerB.orig_Start orig,
@@ -25,6 +55,7 @@ public class PlayerPatches
 
     private class BasePlayerInstance(PlayerControllerB playerController) : IPlayer
     {
+        //TODO system worked okay, but only teleported currently selected player.And was not shown locally per client
         private ShipTeleporter Teleporter => TeleporterPatches.Instance.ShipTeleporter;
         public ulong Id => playerController.NetworkObjectId;
         public bool IsAlive => !playerController.isPlayerDead;
@@ -84,6 +115,11 @@ public class PlayerPatches
     }
 
     private class BasePlayerSpawnEvent(IPlayer player): PlayerSpawnEvent
+    {
+        public override IPlayer Player => player;
+    }
+
+    private class BasePlayerJumpEvent(IPlayer player) : PlayerJumpEvent
     {
         public override IPlayer Player => player;
     }
