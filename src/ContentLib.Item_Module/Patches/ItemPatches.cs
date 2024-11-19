@@ -1,7 +1,9 @@
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
+using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
+using ContentLib.entityAPI.Model.entity;
 using ContentLib.Item_Module.Events;
 using ContentLib.Item_Module.Model;
 using On.GameNetcodeStuff;
@@ -67,7 +69,7 @@ public class ItemPatches
 
         if (!grabbedobject.TryGet(out NetworkObject networkObject))
             return;
-        
+        //TODO apparently this might be busted and calling root
         GrabbableObject grabbedObjectActual = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
       
         GameEventManager.Instance.Trigger(new BaseItemPickupEvent(grabbedObjectActual, self));
@@ -82,7 +84,7 @@ public class ItemPatches
     {
         public override Vector3 Position => item.transform.position;
         public override IGameItem Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
-        public override IGameEntity GrabbingEntity => EnemyManager.Instance.GetEnemy(playerController.NetworkObjectId);
+        public override IGameEntity GrabbingEntity => EntityManager.Instance.GetEntity(playerController.NetworkObjectId);
     }
     /// <summary>
     /// Implementation of the ItemDroppedEvent abstract class. 
@@ -93,7 +95,7 @@ public class ItemPatches
     {
         public override Vector3 Position => item.transform.position;
         public override IGameItem Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
-        public override IGameEntity DroppingEntity => EnemyManager.Instance.GetEnemy(playerController.NetworkObjectId);
+        public override IGameEntity DroppingEntity => EntityManager.Instance.GetEntity(playerController.NetworkObjectId);
     }
 
     /// <summary>
@@ -107,11 +109,11 @@ public class ItemPatches
         //TODO needs to have the logs added back in when the debug system is fully setup
         if (networkBehaviour.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server)
         {
-            //CLLogger.Instance.Log($"[ItemPatches] IsServerCall returned true");
+            CLLogger.Instance.DebugLog($"IsServerCall returned True",DebugLevel.ItemEvent);
             return true;
         }
 
-        //CLLogger.Instance.Log($"[ItemPatches] IsServerCall returned false");
+        CLLogger.Instance.DebugLog($"IsServerCall returned false",DebugLevel.ItemEvent);
         return false;
     }
 }

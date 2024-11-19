@@ -19,7 +19,7 @@ public class TestListener : IListener
     }
 
     [EventDelegate]
-    private void OnMonsterSpawn(PlayerJumpEvent playerJumpEvent)
+    private void OnPlayerJump(PlayerJumpEvent playerJumpEvent)
     {
         playerJumpEvent.Player.TeleportToShip();
     }
