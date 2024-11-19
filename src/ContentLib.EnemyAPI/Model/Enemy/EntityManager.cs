@@ -18,6 +18,8 @@ public class EntityManager
     /// </summary>
     private Dictionary<ulong,IGameEntity> _entities;
 
+    private bool _isEntityBeingTeleported = false;
+
     /// <summary>
     /// Private constructor that initialises the _enemies Dictionary. <i>(Developer Note: Keep private to ensure there
     /// is no way to construct this manager other than the singleton getter.)</i>
@@ -70,5 +72,11 @@ public class EntityManager
     /// <param name="id">The id to check.</param>
     /// <returns>True if the id corresponds to a registered entity, False otherwise.</returns>
     public bool IsRegistered(ulong id) => _entities.ContainsKey(id);
+
+    public bool EntityBeingTeleported
+    {
+        get => _isEntityBeingTeleported;
+        set => _isEntityBeingTeleported = value;
+    }
 
 }

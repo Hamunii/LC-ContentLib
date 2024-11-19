@@ -7,6 +7,7 @@ using ContentLib.EnemyAPI.Events;
 using ContentLib.entityAPI.Model.entity;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.ProBuilder;
 using PlayerControllerB = GameNetcodeStuff.PlayerControllerB;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -82,6 +83,14 @@ public class PlayerPatches
                 CLLogger.Instance.Log("Teleporter is null, teleporting not executed.");
                 return;
             }
+
+            //TODO fix this logic? Maybe move to teleporter patches?
+            if (EntityManager.Instance.EntityBeingTeleported)
+            {
+                //return;
+            }
+            
+            EntityManager.Instance.EntityBeingTeleported = true;
             //TODO This works now but needs a sanity check to prevent overriding the teleport.
             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(SearchForPlayerInRadar(Id));
             CLLogger.Instance.Log($"Teleporting player with ID {SearchForPlayerInRadar(Id)}");
