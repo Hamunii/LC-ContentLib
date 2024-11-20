@@ -18,7 +18,6 @@ public class PlayerPatches
     {
         On.GameNetcodeStuff.PlayerControllerB.Start += PlayerControllerBOnStart;
         On.GameNetcodeStuff.PlayerControllerB.PlayerJumpedServerRpc += PlayerControllerBOnPlayerJumpedServerRpc;
-        //On.GameNetcodeStuff.PlayerControllerB.PlayerJumpedClientRpc += PlayerControllerBOnPlayerJumpedClientRpc;
         On.GameNetcodeStuff.PlayerControllerB.PlayerJump += PlayerControllerBOnPlayerJump;
     }
 
@@ -83,15 +82,15 @@ public class PlayerPatches
                 CLLogger.Instance.Log("Teleporter is null, teleporting not executed.");
                 return;
             }
-
+            
             //TODO fix this logic? Maybe move to teleporter patches?
-            if (EntityManager.Instance.EntityBeingTeleported)
+            if (Teleporter.cooldownTime > 0.0f)
             {
-                //return;
+                CLLogger.Instance.Log($"Cooldown Timer Value: {Teleporter.cooldownTime}");
+                CLLogger.Instance.Log("Teleporter cooldown time is greater than 0.");
+                return;
             }
             
-            EntityManager.Instance.EntityBeingTeleported = true;
-            //TODO This works now but needs a sanity check to prevent overriding the teleport.
             StartOfRound.Instance.mapScreen.SwitchRadarTargetAndSync(SearchForPlayerInRadar(Id));
             CLLogger.Instance.Log($"Teleporting player with ID {SearchForPlayerInRadar(Id)}");
             Teleporter.StartCoroutine(DelayedTeleport(Teleporter));
