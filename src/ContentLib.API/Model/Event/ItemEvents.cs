@@ -1,9 +1,8 @@
 using ContentLib.API.Model.Entity;
-using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
 using UnityEngine;
 
-namespace ContentLib.Item_Module.Events;
+namespace ContentLib.API.Model.Event;
 /// <summary>
 /// Interface representing the general functionality of a game event that involves an IGameItem instance.
 /// </summary>

@@ -1,5 +1,6 @@
 using ContentLib.API.Model.Entity.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy;
+using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -18,13 +19,13 @@ public class EnemyAIPatches
     {
         orig(self);
         if(self is CustomEnemyAI customAI)
-            EnemyManager.Instance.RegisterEnemy(customAI);
+            EntityManager.Instance.RegisterEntity(customAI);
     }
 
     private static void EnemyAIOnKillEnemy(On.EnemyAI.orig_KillEnemy orig, EnemyAI self, bool destroy)
     {
         orig(self, destroy);
-        EnemyManager.Instance.UnRegisterEnemy(self.NetworkObjectId);
+        EntityManager.Instance.UnRegisterEntity(self.NetworkObjectId);
     }
     
 

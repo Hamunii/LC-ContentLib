@@ -1,6 +1,7 @@
 using System;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Coilhead;
+using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -22,7 +23,7 @@ public class CoilheadPatches
     private static void CoilheadSpawn(SpringManAI springManAI)
     {
         var coilhead = new LocalCoilhead(springManAI);
-        EnemyManager.Instance.RegisterEnemy(coilhead);
+        EntityManager.Instance.RegisterEntity(coilhead);
     }
 
     private class LocalCoilhead(SpringManAI springManAI) : ICoilhead

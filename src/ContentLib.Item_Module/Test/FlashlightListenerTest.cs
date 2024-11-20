@@ -1,8 +1,8 @@
+using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item.Tools.Types;
 using ContentLib.Core.Model.Event.Listener;
 using ContentLib.Core.Utils;
-using ContentLib.Item_Module.Events;
- 
+
 namespace ContentLib.Item_Module.Test;
 
 public class FlashlightListenerTest : IListener

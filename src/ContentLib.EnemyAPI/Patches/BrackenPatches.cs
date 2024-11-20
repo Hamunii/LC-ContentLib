@@ -1,8 +1,8 @@
 using System;
 using ContentLib.API.Model.Event;
-using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
+using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -22,12 +22,12 @@ public class BrackenPatches
         Debug.Log("BrackenSpawnPatch");
         IEnemy vanillaBrackenEnemy = new LocalBracken(self);
         Debug.Log("Bracken registration");
-        EnemyManager.Instance.RegisterEnemy(vanillaBrackenEnemy);
+        EntityManager.Instance.RegisterEntity(vanillaBrackenEnemy);
     }
     private static void FlowerManAI_OnCollideWithPlayer(On.FlowermanAI.orig_OnCollideWithPlayer orig, FlowermanAI self, Collider other)
     {
         orig(self, other);
-        IEnemy enemy = EnemyManager.Instance.GetEnemy(self.NetworkObjectId);
+        var enemy = (IEnemy) EntityManager.Instance.GetEntity(self.NetworkObjectId);
         GameEventManager.Instance.Trigger(new LocalBrackenMonsterKillPlayerEvent(enemy));
     }
     private class LocalBracken(FlowermanAI brackenAi) : IBracken

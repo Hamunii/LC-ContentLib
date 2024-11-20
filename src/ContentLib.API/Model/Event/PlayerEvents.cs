@@ -1,7 +1,6 @@
 using ContentLib.API.Model.Entity.Player;
-using ContentLib.API.Model.Event;
 
-namespace ContentLib.EnemyAPI.Events;
+namespace ContentLib.API.Model.Event;
 
 
     public interface IPlayerEvent : IGameEvent
@@ -15,4 +14,11 @@ namespace ContentLib.EnemyAPI.Events;
 
 
         public abstract IPlayer Player { get; }
+    }
+
+    public abstract class PlayerJumpEvent : IPlayerEvent
+    {
+        public abstract IPlayer Player { get; }
+
+        public bool IsCancelled { get; set; }
     }

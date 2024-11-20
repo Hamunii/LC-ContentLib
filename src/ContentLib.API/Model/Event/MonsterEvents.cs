@@ -1,7 +1,6 @@
-using ContentLib.API.Model.Event;
 using ContentLib.EnemyAPI.Model.Enemy;
 
-namespace ContentLib.EnemyAPI.Events;
+namespace ContentLib.API.Model.Event;
 /// <summary>
 /// Interface that represents the general functionality of an event that was triggered by an action relating to an
 /// in-game monster. 

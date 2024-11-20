@@ -2,12 +2,13 @@ using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
 using ContentLib.API.Model.Item.Tools.Types;
 using ContentLib.Core.Utils;
-using ContentLib.Item_Module.Events;
 using ContentLib.Item_Module.Model;
 using UnityEngine;
 
 namespace ContentLib.Item_Module.Patches;
-
+/// <summary>
+/// Patches related to general actions involving Flashlight instances.
+/// </summary>
 public class FlashlightPatches
 {
     public static void Init()
@@ -18,6 +19,12 @@ public class FlashlightPatches
         CLLogger.Instance.Log("Flashlight Patches Complete!");
     }
 
+    /// <summary>
+    /// Patch for triggering activation events for the Flashlight. 
+    /// </summary>
+    /// <param name="orig">The original flashlight activation method.</param>
+    /// <param name="self">The flashlight that called the method.</param>
+    /// <param name="on">Bool representing if the flashlight was switched off or on.</param>
     private static void FlashlightItemOnSwitchFlashlight(On.FlashlightItem.orig_SwitchFlashlight orig, FlashlightItem self, bool on)
     {
         orig(self, on);
@@ -29,6 +36,11 @@ public class FlashlightPatches
         }
     }
 
+    /// <summary>
+    /// Patch for registering the flashlight item with the item manager.
+    /// </summary>
+    /// <param name="orig">The original start method being patched.</param>
+    /// <param name="self">The flashlight calling the start method.</param>
     private static void FlashlightItemOnStart(On.FlashlightItem.orig_Start orig, FlashlightItem self)
     {
         orig(self);
