@@ -1,6 +1,6 @@
 using ContentLib.EnemyAPI.Model.Enemy;
 
-namespace ContentLib.EnemyAPI.Events;
+namespace ContentLib.API.Model.Event;
 
 public abstract class BrackenSeenByPlayerEvent : IMonsterEvents
 {

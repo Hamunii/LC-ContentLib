@@ -4,7 +4,6 @@ using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.entityAPI.Model.entity;
-using ContentLib.Item_Module.Events;
 using ContentLib.Item_Module.Model;
 using On.GameNetcodeStuff;
 using Unity.Netcode;

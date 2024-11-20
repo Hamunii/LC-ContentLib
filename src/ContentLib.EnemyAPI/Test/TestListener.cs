@@ -1,5 +1,5 @@
+using ContentLib.API.Model.Event;
 using ContentLib.Core.Model.Event.Listener;
-using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
 using UnityEngine;

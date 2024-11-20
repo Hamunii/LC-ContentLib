@@ -1,7 +1,6 @@
 using ContentLib.API.Model.Entity.Player;
-using ContentLib.API.Model.Event;
 
-namespace ContentLib.EnemyAPI.Events;
+namespace ContentLib.API.Model.Event;
 
 
     public interface IPlayerEvent : IGameEvent

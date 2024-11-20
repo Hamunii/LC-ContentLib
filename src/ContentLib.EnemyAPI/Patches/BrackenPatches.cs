@@ -1,6 +1,5 @@
 using System;
 using ContentLib.API.Model.Event;
-using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
 using ContentLib.entityAPI.Model.entity;

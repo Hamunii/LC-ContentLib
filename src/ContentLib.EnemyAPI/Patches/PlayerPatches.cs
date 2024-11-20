@@ -3,15 +3,16 @@ using System.Collections;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.Core.Utils;
-using ContentLib.EnemyAPI.Events;
 using ContentLib.entityAPI.Model.entity;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.ProBuilder;
 using PlayerControllerB = GameNetcodeStuff.PlayerControllerB;
 
 namespace ContentLib.EnemyAPI.Patches;
-
+/// <summary>
+/// Patches related to general actions involving BPlayerController instances. This includes input based actions,
+/// spawning, death, etc. 
+/// </summary>
 public class PlayerPatches
 {
     public static void Init()
@@ -21,6 +22,13 @@ public class PlayerPatches
         On.GameNetcodeStuff.PlayerControllerB.PlayerJump += PlayerControllerBOnPlayerJump;
     }
 
+    /// <summary>
+    /// Patch for triggering host player jump events. <i>Developer Note: For some reason, the jump ServerRpc
+    /// doesn't trigger on the host client, hence the need for this patch.</i>
+    /// </summary>
+    /// <param name="orig">The original method to patch.</param>
+    /// <param name="self">The player controller calling the method.</param>
+    /// <returns>The IEnumerator instance for the method.</returns>
     private static IEnumerator PlayerControllerBOnPlayerJump(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJump orig, PlayerControllerB self)
     {
         IEnumerator result = orig(self);
@@ -30,12 +38,11 @@ public class PlayerPatches
         return result;
     }
 
-    private static void PlayerControllerBOnPlayerJumpedClientRpc(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJumpedClientRpc orig, PlayerControllerB self)
-    {
-        orig(self);
-        CLLogger.Instance.Log("Player Jumped Client");
-    }
-
+    /// <summary>
+    /// Patch for triggering client side player jump events.
+    /// </summary>
+    /// <param name="orig">The original method to patch.</param>
+    /// <param name="self">The player controller calling the method.</param>
     private static void PlayerControllerBOnPlayerJumpedServerRpc(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJumpedServerRpc orig, PlayerControllerB self)
     {
         var isServerExec = self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server;
@@ -46,6 +53,13 @@ public class PlayerPatches
         GameEventManager.Instance.Trigger(new BasePlayerJumpEvent((IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId)));
     }
 
+    /// <summary>
+    /// <p>Patch for registering the player instances with the Entity Manager, upon unity object start. </p>
+    /// <i> Developer Note: These are, counter intuitively, registered at startup of a server, with logging in players
+    /// just occupying the slot of one of these pre-registered Players.</i>
+    /// </summary>
+    /// <param name="orig">The original start method.</param>
+    /// <param name="self">The player controller instance calling the start method.</param>
     private static void PlayerControllerBOnStart(On.GameNetcodeStuff.PlayerControllerB.orig_Start orig,
         PlayerControllerB self)
     {
