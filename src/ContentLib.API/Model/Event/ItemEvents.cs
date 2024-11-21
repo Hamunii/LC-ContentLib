@@ -42,7 +42,7 @@ public abstract class ItemPickUpEvent : IItemEvent
     public abstract Vector3 Position { get; }
     
     /// <inheritdoc />
-    public abstract IGameItem Item { get; }
+    public abstract IGameItem? Item { get; }
     
     /// <inheritdoc />
     public bool IsCancelled { get; set; }
@@ -50,7 +50,7 @@ public abstract class ItemPickUpEvent : IItemEvent
     /// <summary>
     /// The Game Entity that picked up the item.
     /// </summary>
-    public abstract IGameEntity GrabbingEntity { get; } 
+    public abstract IGameEntity? GrabbingEntity { get; } 
     
 }
 

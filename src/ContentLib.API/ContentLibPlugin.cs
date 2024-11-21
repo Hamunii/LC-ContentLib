@@ -16,12 +16,10 @@ public abstract class ContentLibPlugin : BaseUnityPlugin
         Initialize();
         OnAwake();
     }
-
     
-
-    protected virtual void Initialize()
+    
+    protected void Initialize()
     {
-        //TODO need to now make the api loader in the Core project.
         IAPILoader apiLoader = FindObjectsByType<MonoBehaviour>(FindObjectsInactive
             .Include,FindObjectsSortMode.None)
             .OfType<IAPILoader>()

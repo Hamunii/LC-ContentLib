@@ -1,3 +1,5 @@
+using ContentLib.API.Model.Entity;
+using ContentLib.API.Model.Entity.Player;
 using UnityEngine;
 
 namespace ContentLib.API.Model.Item;
@@ -30,4 +32,5 @@ public interface IGameItem
     /// The location of the item within the game-world.
     /// </summary>
     Vector3 Location { get; }
+    IGameEntity? Owner { get; set; }
 }

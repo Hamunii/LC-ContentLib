@@ -71,13 +71,14 @@ public class ItemManager : IItemManager
     /// </summary>
     /// <param name="id">The id of the item to get</param>
     /// <returns>The item with the given id</returns>
-    public IGameItem GetItem(ulong id)
+    public IGameItem? GetItem(ulong id)
     {
         if (_items.TryGetValue(id, out var item))
         {
             return item;
         }
-        throw new KeyNotFoundException($"Enemy with ID {id} was not found.");
+
+        return null;
     }
 }
 

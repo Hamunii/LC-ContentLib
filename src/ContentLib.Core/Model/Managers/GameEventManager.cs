@@ -84,8 +84,8 @@ namespace ContentLib.API.Model.Event
         /// <typeparam name="TEvent">The type parameter of the Triggered Event.</typeparam>
         public void Trigger<TEvent>(TEvent gameEvent) where TEvent : IGameEvent
         {
-            Type? eventType = typeof(TEvent).BaseType;
-            CLLogger.Instance.DebugLog($"$GameEventManager::Trigger: Game event type: {eventType}");
+            Type? eventType = typeof(TEvent);
+            CLLogger.Instance.Log($"$GameEventManager::Trigger: Game event type: {eventType}");
             if (!_eventHandlers.TryGetValue(eventType, out var handler)) return;
             
             var eventHandler = handler as Action<TEvent>;

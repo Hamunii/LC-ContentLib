@@ -70,8 +70,12 @@ public class ItemPatches
             return;
         //TODO apparently this might be busted and calling root
         GrabbableObject grabbedObjectActual = networkObject.gameObject.GetComponentInChildren<GrabbableObject>();
-      
-        GameEventManager.Instance.Trigger(new BaseItemPickupEvent(grabbedObjectActual, self));
+
+        ItemPickUpEvent itemPickUpEvent = new BaseItemPickupEvent(grabbedObjectActual, self);
+        if (itemPickUpEvent.Item == null || itemPickUpEvent.GrabbingEntity == null)
+            return;
+        itemPickUpEvent.Item.Owner = itemPickUpEvent.GrabbingEntity;
+        GameEventManager.Instance.Trigger(itemPickUpEvent);
     }
     
     /// <summary>
