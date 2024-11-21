@@ -9,7 +9,6 @@ public class RoundPatches
     //TODO Hamunii pop ur patch here, but remember to branch off
     public static void Init()
     {
-        Debug.Log("Patching Round Methods");
         On.StartOfRound.ShipLeave += StartOfRoundOnShipLeave;
     }
     

@@ -1,6 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
+using ContentLib.Core.Loader;
 using ContentLib.Core.Utils;
+using UnityEngine;
 
 namespace ContentLib.Core;
 
@@ -17,5 +19,8 @@ public class Plugin : BaseUnityPlugin
     {
         s_log = Logger;
         CLLogger.Instance.Log($"{LCMPluginInfo.PLUGIN_NAME} is loaded!");
+        var apiLoaderObject = new GameObject("APILoader");
+        apiLoaderObject.AddComponent<APILoader>();
+        DontDestroyOnLoad(apiLoaderObject);
     }
 }

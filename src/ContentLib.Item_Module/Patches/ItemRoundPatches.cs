@@ -9,7 +9,6 @@ public class ItemRoundPatches
 {
     public static void Init()
     {
-        Debug.Log("Patching Round Methods");
         On.StartOfRound.ShipLeave += StartOfRoundOnShipLeave;
     }
 

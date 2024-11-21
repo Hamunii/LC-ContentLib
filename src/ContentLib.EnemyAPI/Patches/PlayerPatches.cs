@@ -32,7 +32,6 @@ public class PlayerPatches
     private static IEnumerator PlayerControllerBOnPlayerJump(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJump orig, PlayerControllerB self)
     {
         IEnumerator result = orig(self);
-        CLLogger.Instance.Log($"Player with id {self.NetworkObjectId} has jumped!");
         GameEventManager.Instance.Trigger(new BasePlayerJumpEvent((IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId)));
      
         return result;
@@ -47,7 +46,6 @@ public class PlayerPatches
     {
         var isServerExec = self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server;
         orig(self);
-        CLLogger.Instance.Log($"Player with id {self.NetworkObjectId} has jumped");
         if (!isServerExec)
             return;
         GameEventManager.Instance.Trigger(new BasePlayerJumpEvent((IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId)));

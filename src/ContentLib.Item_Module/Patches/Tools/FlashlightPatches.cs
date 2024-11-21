@@ -1,3 +1,5 @@
+using ContentLib.API.Model.Entity;
+using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
 using ContentLib.API.Model.Item.Tools.Types;
@@ -68,6 +70,7 @@ public class FlashlightPatches
             ItemActivationEvent activationEvent = new FlashLightActivateEvent(this);
             GameEventManager.Instance.Trigger(activationEvent);
         }
+        public IGameEntity? Owner { get; set; }
     }
 
     private class FlashLightActivateEvent(IFlashlight flashlight) : ItemActivationEvent

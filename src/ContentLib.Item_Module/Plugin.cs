@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Logging;
 using ContentLib.Core.Utils;
 using ContentLib.Item_Module.Patches;
+using ContentLib.Item_Module.Patches.Scrap;
 
 namespace ContentLib.Item_Module;
 
@@ -28,5 +29,6 @@ public class Plugin : BaseUnityPlugin
         ItemRoundPatches.Init();
         ItemPatches.Init();
         FlashlightPatches.Init();
+        RemotePatches.Init();
     }
 }
