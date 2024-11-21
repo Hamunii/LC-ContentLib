@@ -27,6 +27,10 @@ public abstract class ContentLibPlugin : BaseUnityPlugin
             .OfType<IAPILoader>()
             .ToArray()[0];
         ContentLibAPI.Instance.InitializeAPI(apiLoader);
+        if (ContentLibAPI.Instance == null)
+        { 
+            throw new NullReferenceException();
+        }
     }
     protected abstract void OnAwake();
 }

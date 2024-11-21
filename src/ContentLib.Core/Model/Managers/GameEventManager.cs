@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.Core.Model.Event.Listener;
+using ContentLib.Core.Utils;
 using Dissonance;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace ContentLib.API.Model.Event
         public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
         {
             Type eventType = typeof(TEvent);
-            Debug.Log($"Subscribing to {eventType}");
+            CLLogger.Instance.DebugLog($"Subscribing to {eventType.Name}");
             if (_eventHandlers.TryGetValue(eventType, out var existingHandler))
             {
                 _eventHandlers[eventType] = Delegate.Combine(existingHandler, handler);
@@ -84,7 +85,7 @@ namespace ContentLib.API.Model.Event
         public void Trigger<TEvent>(TEvent gameEvent) where TEvent : IGameEvent
         {
             Type? eventType = typeof(TEvent).BaseType;
-            Debug.Log($"$GameEventManager::Trigger: Game event type: {eventType}");
+            CLLogger.Instance.DebugLog($"$GameEventManager::Trigger: Game event type: {eventType}");
             if (!_eventHandlers.TryGetValue(eventType, out var handler)) return;
             
             var eventHandler = handler as Action<TEvent>;
@@ -99,11 +100,10 @@ namespace ContentLib.API.Model.Event
         /// Attribute are not correctly formatted.</exception>
         public void RegisterListener(IListener listener)
         {
-            Debug.Log($"GameEventManager::RegisterListener {listener.GetType()}");
+            CLLogger.Instance.DebugLog($"GameEventManager::RegisterListener {listener.GetType()}");
             var listenerType = listener.GetType();
             var methodsWithAttribute = listenerType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(method => method.GetCustomAttributes(typeof(EventDelegateAttribute), true).Any());
-
             foreach (var method in methodsWithAttribute)
             {
                 var parameters = method.GetParameters();
@@ -118,7 +118,6 @@ namespace ContentLib.API.Model.Event
                     throw new InvalidOperationException($"Method {method.Name} parameter is not a game event!");
                 }
 
-                // Dynamically resolve the Subscribe<T> method for the specific event type
                 var subscribeMethod = typeof(GameEventManager).GetMethod(nameof(Subscribe))
                     ?.MakeGenericMethod(eventType);
 
@@ -127,17 +126,14 @@ namespace ContentLib.API.Model.Event
                     throw new InvalidOperationException($"Unable to find Subscribe method for event type {eventType.Name}.");
                 }
 
-                // Create the Action<T> delegate dynamically
                 var actionDelegate = Delegate.CreateDelegate(typeof(Action<>).MakeGenericType(eventType), listener, method);
                 if (actionDelegate == null)
                 {
                     throw new InvalidOperationException($"Failed to create delegate for method {method.Name} with event type {eventType.FullName}.");
                 }
+                CLLogger.Instance.DebugLog($"The subscribe method {subscribeMethod?.Name} has been called with delegate {actionDelegate.GetMethodInfo().Name}");
 
-
-
-                // Invoke the Subscribe<T> method
-                subscribeMethod.Invoke(this, new object[] { actionDelegate });
+                subscribeMethod?.Invoke(this, new object[] { actionDelegate });
             }
 
         }

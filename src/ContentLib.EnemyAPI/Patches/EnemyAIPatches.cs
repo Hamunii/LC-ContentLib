@@ -9,7 +9,6 @@ public class EnemyAIPatches
 {
     public static void Init()
     {
-        Debug.Log("Patching EnemyAI");
         On.EnemyAI.Start += EnemyAIOnStart;
         On.EnemyAI.KillEnemy += EnemyAIOnKillEnemy;
     }

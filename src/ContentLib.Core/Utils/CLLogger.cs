@@ -45,7 +45,7 @@ namespace ContentLib.Core.Utils
         /// Logs a message that is related to a mod that 
         /// </summary>
         /// <param name="message"></param>
-        public void Log(string message) => Plugin.s_log.LogInfo($"[{LCMPluginInfo.PLUGIN_NAME}] {message}");
+        public void Log(string message) => Plugin.s_log.LogInfo(message);
 
         /// <summary>
         /// Logs a debug message, if the log type is enabled.

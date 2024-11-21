@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.API", "src\Conte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.Item_Module", "src\ContentLib.Item_Module\ContentLib.Item_Module.csproj", "{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentLib.ExampleMod", "src\ContentLib.ExampleMod\ContentLib.ExampleMod.csproj", "{00797D46-9B1E-404D-B117-85E106D97DA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00797D46-9B1E-404D-B117-85E106D97DA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00797D46-9B1E-404D-B117-85E106D97DA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00797D46-9B1E-404D-B117-85E106D97DA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00797D46-9B1E-404D-B117-85E106D97DA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,5 +53,6 @@ Global
 		{E2B23891-E39C-40C3-933A-7D02A302F7C8} = {9EB3553F-37B4-4D11-B1DC-CD1E38DAE86D}
 		{D30FD967-0F65-4461-8725-1A107683872E} = {9EB3553F-37B4-4D11-B1DC-CD1E38DAE86D}
 		{BF6B6799-EFDC-4DD6-B9E7-D73F1C880974} = {9EB3553F-37B4-4D11-B1DC-CD1E38DAE86D}
+		{00797D46-9B1E-404D-B117-85E106D97DA6} = {9EB3553F-37B4-4D11-B1DC-CD1E38DAE86D}
 	EndGlobalSection
 EndGlobal
