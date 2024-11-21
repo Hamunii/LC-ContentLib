@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 
@@ -7,7 +8,7 @@ namespace ContentLib.Item_Module.Model;
 /// <summary>
 /// Manager responsible for the registration and handling of IGameItems. 
 /// </summary>
-public class ItemManager
+public class ItemManager : IItemManager
 {
     /// <summary>
     /// Returns , or creates the singleton instance of the Item Manager. 

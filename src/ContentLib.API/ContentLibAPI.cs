@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices.Model.Managers;
+using ContentLib.API.Model;
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
@@ -20,34 +21,27 @@ public class ContentLibAPI
     /// </summary>
     public static ContentLibAPI Instance => instance.Value;
     private IEntityManager _entityManager;
-
-    internal void InitializeAPI()
+    private IGameEventManager _eventManager;
+    private IItemManager _itemManager;
+    internal void InitializeAPI(IAPILoader loader)
     {
-        //TODO add methods for getting the managers from the core.
+        _eventManager = loader.GameEventManager;
+        _entityManager = loader.EntityManager;
+        _itemManager = loader.ItemManager;
     }
     public IGameEntity GetGameEntity(ulong id)
-    {
-        throw new NotImplementedException("Getting the game entity is not implemented.");
-    }
-
-    public IGameEntity GetEntity(ulong id)
     {
         return _entityManager.GetEntity(id);
     }
 
-    public int AlivePlayersCount
-    {
-        get => throw new NotImplementedException("Getting the player count is not yet implemented");
-    }
-
     public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
     {
-        throw new NotImplementedException("Subscribing to game events is not yet implemented");
+        _eventManager.Subscribe(handler);
     }
 
     public void RegisterListener(IListener listener)
     {
-        throw new NotImplementedException("Registering listeners is not yet implemented");
+        _eventManager.RegisterListener(listener);
     }
 
     

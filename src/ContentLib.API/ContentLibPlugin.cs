@@ -2,6 +2,7 @@ using System.Linq;
 using System.Runtime.CompilerServices.Model.Managers;
 using BepInEx;
 using ContentLib.API;
+using ContentLib.API.Model;
 using UnityEngine;
 
 namespace System.Runtime.CompilerServices;
@@ -20,7 +21,12 @@ public abstract class ContentLibPlugin : BaseUnityPlugin
 
     protected virtual void Initialize()
     {
-        ContentLibAPI.Instance.InitializeAPI();
+        //TODO need to now make the api loader in the Core project.
+        IAPILoader apiLoader = FindObjectsByType<MonoBehaviour>(FindObjectsInactive
+            .Include,FindObjectsSortMode.None)
+            .OfType<IAPILoader>()
+            .ToArray()[0];
+        ContentLibAPI.Instance.InitializeAPI(apiLoader);
     }
     protected abstract void OnAwake();
 }

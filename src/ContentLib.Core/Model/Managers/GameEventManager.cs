@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.Core.Model.Event.Listener;
 using Dissonance;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace ContentLib.API.Model.Event
     /// Manager responsible for the subscription and triggering of In-Game Events, for the purposes of API calls. <i>
     /// Developer Note: I swear to god I didn't start this with the intention of making a full event api... whoops... </i>
     /// </summary>
-    public class GameEventManager
+    public class GameEventManager : IGameEventManager
     {
         /// <summary>
         /// Singleton pattern call via a lazy implementation of the manager.
