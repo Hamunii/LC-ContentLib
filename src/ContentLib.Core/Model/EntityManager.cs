@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.API.Model.Entity;
 using UnityEngine;
 
 namespace ContentLib.entityAPI.Model.entity;
 
-public class EntityManager
+public class EntityManager : IEntityManager
 {
     /// <summary>
     /// Returns , or creates the singleton instance of the Entity Manager. 
