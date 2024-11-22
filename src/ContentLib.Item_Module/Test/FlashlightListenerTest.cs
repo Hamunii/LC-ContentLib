@@ -11,7 +11,7 @@ public class FlashlightListenerTest : IListener
     private void OnItemActivate(ItemActivationEvent itemActivationEvent)
     {
         CLLogger.Instance.Log($"OnItemActivate: {itemActivationEvent}");
-        if (itemActivationEvent.Item is IFlashlight flashlight)
+        if (itemActivationEvent.Item is IFlashlightTool flashlight)
         {
             
         }

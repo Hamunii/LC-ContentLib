@@ -20,6 +20,19 @@ public class ItemPatches
     {
         On.GameNetcodeStuff.PlayerControllerB.GrabObjectServerRpc += PlayerControllerBOnGrabObjectServerRpc; 
         On.GameNetcodeStuff.PlayerControllerB.ThrowObjectServerRpc += PlayerControllerBOnThrowObjectServerRpc;
+        On.GrabbableObject.ActivateItemServerRpc += GrabbableObjectOnActivateItemServerRpc;
+    }
+
+    private static void GrabbableObjectOnActivateItemServerRpc(On.GrabbableObject.orig_ActivateItemServerRpc orig, GrabbableObject self, bool onoff, bool buttondown)
+    {
+        var isServerCall = IsServerCall(self);
+        orig(self, onoff, buttondown);
+        if (!isServerCall)
+            return;
+        ItemActivationEvent activationEvent =
+            new BaseItemActivationEvent(ItemManager.Instance.GetItem(self.NetworkObjectId));
+        GameEventManager.Instance.Trigger(activationEvent);
+
     }
 
     /// <summary>
@@ -86,7 +99,7 @@ public class ItemPatches
     private class BaseItemPickupEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB playerController) : ItemPickUpEvent
     {
         public override Vector3 Position => item.transform.position;
-        public override IGameItem Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
+        public override IGameItem? Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
         public override IGameEntity GrabbingEntity => EntityManager.Instance.GetEntity(playerController.NetworkObjectId);
     }
     /// <summary>
@@ -97,7 +110,7 @@ public class ItemPatches
     private class BaseItemDropEvent(GrabbableObject item, GameNetcodeStuff.PlayerControllerB? playerController): ItemDroppedEvent
     {
         public override Vector3 Position => item.transform.position;
-        public override IGameItem Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
+        public override IGameItem? Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
         public override IGameEntity DroppingEntity => EntityManager.Instance.GetEntity(playerController.NetworkObjectId);
     }
 
@@ -118,5 +131,11 @@ public class ItemPatches
 
         CLLogger.Instance.DebugLog($"IsServerCall returned false",DebugLevel.ItemEvent);
         return false;
+    }
+
+    private class BaseItemActivationEvent(IGameItem? item) : ItemActivationEvent
+    {
+        public override Vector3 Position => item.Location;
+        public override IGameItem? Item => item;
     }
 }

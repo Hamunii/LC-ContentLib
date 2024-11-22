@@ -15,7 +15,7 @@ public interface IItemEvent : IGameEvent
     /// <summary>
     /// The item involved in the event.
     /// </summary>
-    IGameItem Item { get; }
+    IGameItem? Item { get; }
 }
 /// <summary>
 /// An event that represents the activation of an item. 
@@ -27,7 +27,7 @@ public abstract class ItemActivationEvent : IItemEvent
     public abstract Vector3 Position { get; }
     
     /// <inheritdoc/>
-    public abstract IGameItem Item { get; }
+    public abstract IGameItem? Item { get; }
     
     /// <inheritdoc />
     public bool IsCancelled { get; set; }
@@ -63,7 +63,7 @@ public abstract class ItemDroppedEvent : IItemEvent
     public abstract Vector3 Position { get; }
     
     /// <inheritdoc />
-    public abstract IGameItem Item { get; }
+    public abstract IGameItem? Item { get; }
     
     /// <inheritdoc />
     public bool IsCancelled { get; set; }

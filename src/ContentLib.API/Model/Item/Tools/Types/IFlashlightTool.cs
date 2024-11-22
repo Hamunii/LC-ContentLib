@@ -1,6 +1,6 @@
 namespace ContentLib.API.Model.Item.Tools.Types;
 
-public interface IFlashlight : IFlashlightTool
+public interface IFlashlightTool : ITool
 {
     
 }

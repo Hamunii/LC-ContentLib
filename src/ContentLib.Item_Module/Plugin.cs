@@ -1,6 +1,7 @@
 ﻿
 using BepInEx;
 using BepInEx.Logging;
+using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 using ContentLib.Item_Module.Patches;
 using ContentLib.Item_Module.Patches.Scrap;
@@ -30,5 +31,6 @@ public class Plugin : BaseUnityPlugin
         ItemPatches.Init();
         FlashlightPatches.Init();
         RemotePatches.Init();
+        WhoopieCushionPatches.Init();
     }
 }
