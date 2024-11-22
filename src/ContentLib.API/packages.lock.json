@@ -46,6 +46,12 @@
         "resolved": "2023.2.4",
         "contentHash": "J0UbKuh0ACVBNq/gCJEIqDoiZJe58er9nSGPRElzk9hJBS23xif6xnisayD4m3heCKqsZQFInnQcbrRgzWp4dw=="
       },
+      "WhiteSpike-Interactive_Terminal_API": {
+        "type": "Direct",
+        "requested": "[1.2.0, )",
+        "resolved": "1.2.0",
+        "contentHash": "0CeI0RvQmhciHCTQ5QyhwFJegByE7I2boVglIFPdRFll+zl3HIDBQ0WZuZn7Ft48eMfuDE0heJx3hVmVDFoHeQ=="
+      },
       "BepInEx.BaseLib": {
         "type": "Transitive",
         "resolved": "5.4.20",
