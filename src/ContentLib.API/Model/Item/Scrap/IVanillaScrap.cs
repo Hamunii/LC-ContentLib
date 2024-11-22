@@ -1,6 +1,6 @@
 namespace ContentLib.API.Model.Item.Scrap;
 
-public interface IWhoopieCoushin : IVanillaScrap
+public interface IVanillaScrap : IScrap
 {
     
 }

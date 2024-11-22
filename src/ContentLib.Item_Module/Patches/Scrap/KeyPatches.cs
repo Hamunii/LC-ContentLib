@@ -1,4 +1,5 @@
 using ContentLib.API.Model.Item;
+using ContentLib.API.Model.Item.Scrap;
 using IL;
 using UnityEngine;
 

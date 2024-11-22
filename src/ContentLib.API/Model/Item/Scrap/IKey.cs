@@ -1,6 +1,6 @@
-namespace ContentLib.API.Model.Item;
+namespace ContentLib.API.Model.Item.Scrap;
 
-public interface IKey : IScrap
+public interface IKey : IVanillaScrap
 {
     
 }

@@ -1,6 +1,6 @@
-namespace ContentLib.API.Model.Item;
+namespace ContentLib.API.Model.Item.Scrap;
 
-public interface IRemoteControlScrap: IScrap
+public interface IRemoteControlScrap: IVanillaScrap
 {
     
 }

@@ -1,5 +1,6 @@
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Item;
+using ContentLib.API.Model.Item.Scrap;
 using ContentLib.Core.Utils;
 using UnityEngine;
 
