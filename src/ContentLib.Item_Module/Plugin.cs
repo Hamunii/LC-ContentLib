@@ -30,6 +30,7 @@ public class Plugin : BaseUnityPlugin
         ItemRoundPatches.Init();
         ItemPatches.Init();
         FlashlightPatches.Init();
+        KeyPatches.Init();
         RemotePatches.Init();
         WhoopieCushionPatches.Init();
     }
