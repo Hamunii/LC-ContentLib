@@ -16,8 +16,13 @@ public class TestListener : IListener
         IGameItem? item = itemActivationEvent.Item;
         if (item is IRemoteControlScrap && item.Owner is IPlayer player)
         {
-
-            item = new FunnyNameDecorator(item);
+            player.TeleportToShip();
         }
+    }
+
+    [EventDelegate]
+    private void OnPlayerJump(PlayerJumpEvent playerJumpEvent)
+    {
+        playerJumpEvent.Player.TeleportToShip();
     }
 }

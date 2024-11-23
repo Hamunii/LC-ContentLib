@@ -1,6 +1,7 @@
 using System;
 using InteractiveTerminalAPI.UI;
 using InteractiveTerminalAPI.UI.Cursor;
+using InteractiveTerminalAPI.UI.Page;
 using InteractiveTerminalAPI.UI.Screen;
 
 namespace ContentLib.API.Model.Terminal;
@@ -29,4 +30,9 @@ public class TerminalUIFactory
         };
 
     public static TextElement CreateTextElement(string text) => new TextElement() { Text = text };
+    
+    public static PageCursorElement CreatePageCursorElement(CursorMenu[] cursorMenus ) => new PageCursorElement()
+    {
+        cursorMenus = cursorMenus
+    };
 }

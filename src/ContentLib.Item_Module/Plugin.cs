@@ -1,7 +1,6 @@
 ﻿
 using BepInEx;
 using BepInEx.Logging;
-using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 using ContentLib.Item_Module.Patches;
 using ContentLib.Item_Module.Patches.Scrap;
