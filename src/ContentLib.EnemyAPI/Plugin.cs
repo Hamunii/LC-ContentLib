@@ -30,6 +30,7 @@ public class Plugin : BaseUnityPlugin
         RoundPatches.Init();
         EnemyAIPatches.Init();
         BrackenPatches.Init();
+        EyelessDogPatches.Init();
         PlayerPatches.Init();
         TeleporterPatches teleporterPatches = TeleporterPatches.Instance;
         CLLogger.Instance.Log("Enemy Patches Initialized!");

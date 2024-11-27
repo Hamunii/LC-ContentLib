@@ -1,7 +1,9 @@
 ﻿using ContentLib.API.Model.Entity.Enemy.Vanilla.EyelessDog;
 using ContentLib.API.Model.Event;
+using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
+using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -10,6 +12,7 @@ public class EyelessDogPatches
 {
     public static void Init()
     {
+        CLLogger.Instance.Log("Eyeless Dog being Patched");
         On.MouthDogAI.Start += MouthDogAIOnStart;
         On.MouthDogAI.EnterLunge += MouthDogAIOnEnterLunge;
         On.MouthDogAI.DetectNoise += MouthDogAIOnDetectNoise;
@@ -27,6 +30,7 @@ public class EyelessDogPatches
         orig(self);
         GameEventManager.Instance.Trigger(new DogAlertEventImp(self));
     }
+
     /// <summary>
     /// Patch for triggering a DogHearsNoiseEvent whenever an Eyeless Dog hears a noise
     /// </summary>
@@ -36,9 +40,16 @@ public class EyelessDogPatches
     /// <param name="noiseloudness">The loudness of the noise heard</param>
     /// <param name="timesnoiseplayedinonespot">The times a noise has been played in the same spot</param>
     /// <param name="noiseid">The type of noise heard</param>
-    private static void MouthDogAIOnDetectNoise(On.MouthDogAI.orig_DetectNoise orig, MouthDogAI self, Vector3 noiseposition, float noiseloudness, int timesnoiseplayedinonespot, int noiseid)
+    private static void MouthDogAIOnDetectNoise(On.MouthDogAI.orig_DetectNoise orig, MouthDogAI self,
+        Vector3 noiseposition, float noiseloudness, int timesnoiseplayedinonespot, int noiseid)
     {
+        bool noNoiseCooldown = (double)self.hearNoiseCooldown >= 0.0;
         orig(self, noiseposition, noiseloudness, timesnoiseplayedinonespot, noiseid);
+        if ((double)self.stunNormalizedTimer > 0.0 || noiseid == 7 || noiseid == 546 || self.inKillAnimation ||
+            noNoiseCooldown || timesnoiseplayedinonespot > 15){
+            return;
+        }
+        
         GameEventManager.Instance.Trigger(new DogHearsNoiseEventImp(self, noiseposition, noiseloudness,
             timesnoiseplayedinonespot, noiseid));
     }
@@ -64,9 +75,10 @@ public class EyelessDogPatches
     private static void MouthDogAIOnStart(On.MouthDogAI.orig_Start orig, MouthDogAI self)
     {
         orig(self);
-        Debug.Log("Eyeless Dog Patches!");
+        
         IEnemy enemy = new LocalEyelessDog(self);
-        EnemyManager.Instance.RegisterEnemy(enemy);
+        EntityManager.Instance.RegisterEntity(enemy);
+        
     }
     
     #region EyelessDogImplementation
@@ -101,6 +113,10 @@ public class EyelessDogPatches
         public void DetectNoise(Vector3 noisePosition, float noiseLoudness, int timesNoisePlayedInOneSpot = 0, int noiseID = 0) => mouthDogAI.DetectNoise(noisePosition, noiseLoudness, timesNoisePlayedInOneSpot, noiseID);
 
         public void ReactToDogAlert(Vector3 howlPosition) => mouthDogAI.ReactToOtherDogHowl(howlPosition);
+
+        public void Kill(Vector3 bodyVelocity, bool spawnBody = true, CauseOfDeath causeOfDeath = CauseOfDeath.Unknown,
+            int deathAnimation = 0, Vector3 positionOffset = default(Vector3)) =>
+            throw new System.NotImplementedException();
     }
     #endregion
     
@@ -113,7 +129,7 @@ public class EyelessDogPatches
     {
         public override Quaternion LungeVector => mouthDogAI.transform.rotation;
         public override bool IsCancelled { get; set; }
-        public override IEnemy Enemy => EnemyManager.Instance.GetEnemy(mouthDogAI.NetworkObjectId);
+        public override IEnemy Enemy => (IEnemy) EntityManager.Instance.GetEntity(mouthDogAI.NetworkObjectId);
     }
     
     /// <summary>
@@ -132,7 +148,7 @@ public class EyelessDogPatches
         int noiseID) : DogHearsNoiseEvent
     {
         public override bool IsCancelled { get; set; }
-        public override IEnemy Enemy => EnemyManager.Instance.GetEnemy(mouthDogAI.NetworkObjectId);
+        public override IEnemy Enemy => (IEnemy) EntityManager.Instance.GetEntity(mouthDogAI.NetworkObjectId);
         public override Vector3 NoisePosition => noisePosition;
         public override float NoiseLoudness => noiseLoudness;
         public override int TimesNoisePlayedInOneSpot => timesNoisePlayed;
@@ -146,7 +162,7 @@ public class EyelessDogPatches
     private class DogAlertEventImp(MouthDogAI mouthDogAI) : DogAlertEvent
     {
         public override bool IsCancelled { get; set; }
-        public override IEnemy Enemy => EnemyManager.Instance.GetEnemy(mouthDogAI.NetworkObjectId);
+        public override IEnemy Enemy => (IEnemy) EntityManager.Instance.GetEntity(mouthDogAI.NetworkObjectId);
         public override Vector3 AlertPosition => mouthDogAI.transform.position;
     }
     #endregion
