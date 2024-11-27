@@ -1,4 +1,5 @@
 ﻿using ContentLib.API.Model.Entity.Enemy.Vanilla.EyelessDog;
+using ContentLib.API.Model.Event;
 using ContentLib.Core.Model.Event;
 using ContentLib.EnemyAPI.Model.Enemy;
 using UnityEngine;
