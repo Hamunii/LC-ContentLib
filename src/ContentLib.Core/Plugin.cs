@@ -21,6 +21,7 @@ public class Plugin : BaseUnityPlugin
     {
         s_log = Logger;
         CLLogger.Instance.Log($"{LCMPluginInfo.PLUGIN_NAME} is loaded!");
+        ConfigManager.Instance.InitConfig(Config);
         var apiLoaderObject = new GameObject("APILoader");
         apiLoaderObject.AddComponent<APILoader>();
         DontDestroyOnLoad(apiLoaderObject);

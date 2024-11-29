@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using BepInEx.Configuration;
 
 namespace ContentLib.Core.Model.Managers;
 
@@ -13,11 +15,7 @@ public class SettingsManager
     /// Gets the singleton instance of the manager.
     /// </summary>
     public static SettingsManager Instance => instance.Value;
-
-    public void MoveToLoggingSettingPage()
-    {
-        
-    }
+   
     public void MoveToEventsSettingPage()
     {
         
@@ -28,4 +26,6 @@ public class SettingsManager
     }
 
 }
+
+
 

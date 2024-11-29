@@ -8,6 +8,7 @@ namespace ContentLib.API.Model.Terminal;
 
 public class TerminalUIFactory
 {
+    public static TextElement CreateEmptyTextElement => new TextElement() { Text = " " };
     public static CursorElement CreateCursorElement(string name, Action? action) =>
         new()
         {

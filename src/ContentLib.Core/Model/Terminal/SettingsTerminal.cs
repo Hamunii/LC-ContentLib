@@ -13,7 +13,7 @@ internal class SettingsTerminal : InteractiveTerminalApplication
     private readonly SettingsManager _settingsManager = SettingsManager.Instance;
     private IScreen _mainScreen;
     private CursorMenu _mainMenu;
-    private CursorMenu _settingsMenu;
+    private SettingSelectionMenu _settingsMenu;
     private IScreen _loggingScreen;
     public override void Initialization()
     {
@@ -25,7 +25,7 @@ internal class SettingsTerminal : InteractiveTerminalApplication
                 , _mainMenu
             ]);
         
-        _settingsMenu = TerminalUIFactory.CreateCursorMenu(InitLoggingSettingsMenuCursors());
+        _settingsMenu = new SettingSelectionMenu("Logging",SettingPageSwitch, LoggingPageSwitch, UpdateText);
         _loggingScreen = TerminalUIFactory.CreateBoxedScreen("Logging Settings"
             , [TerminalUIFactory.CreateTextElement(" "), _settingsMenu]);
         
@@ -56,6 +56,19 @@ internal class SettingsTerminal : InteractiveTerminalApplication
     {
         SwitchScreen(_loggingScreen,_settingsMenu,false);
     }
+
+    private void SettingPageSwitch()
+    {
+        CLLogger.Instance.DebugLog("Invoking SettingPageSwitch");
+        BoxedScreen settingsScreen = _settingsMenu?._selectedScreen;
+        CLLogger.Instance.DebugLog($"Setting logging screen to {settingsScreen.Title}");
+
+        if (settingsScreen == null)
+            return;
+        SwitchScreen(settingsScreen,(CursorMenu) settingsScreen?.elements[1],false );
+    }
+
+  
     
   
 }

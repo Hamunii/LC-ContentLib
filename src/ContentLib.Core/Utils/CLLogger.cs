@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ContentLib.Core.Utils
 {
@@ -15,31 +16,13 @@ namespace ContentLib.Core.Utils
 
         private CLLogger()
         {
-            foreach (DebugLevel logType in Enum.GetValues(typeof(DebugLevel)))
+            foreach (DebugLevel debugLevel in Enum.GetValues(typeof(DebugLevel)))
             {
-                _logSettings[logType] = false;
+                _logSettings[debugLevel] = DebugLevelToConfigKey(debugLevel);
             }
         }
-
-        private readonly Dictionary<DebugLevel, bool> _logSettings = new();
-
-        /// <summary>
-        /// Enables logging for the specified log type.
-        /// </summary>
-        /// <param name="debugLevel">The log type to enable.</param>
-        public void EnableLogType(DebugLevel debugLevel)
-        {
-            _logSettings[debugLevel] = true;
-        }
-
-        /// <summary>
-        /// Disables logging for the specified log type.
-        /// </summary>
-        /// <param name="debugLevel">The log type to disable.</param>
-        public void DisableLogType(DebugLevel debugLevel)
-        {
-            _logSettings[debugLevel] = false;
-        }
+        
+        private readonly Dictionary<DebugLevel, ConfigKey> _logSettings = new();
 
         /// <summary>
         /// Logs a message that is related to a mod that 
@@ -54,18 +37,30 @@ namespace ContentLib.Core.Utils
         /// <param name="debugLevel">The type of log.</param>
         public void DebugLog(string message, DebugLevel debugLevel = DebugLevel.Default)
         {
-            if (_logSettings.TryGetValue(debugLevel, out bool isEnabled) && isEnabled)
+            if (_logSettings.TryGetValue(debugLevel, out ConfigKey configKey) 
+                && 
+                ConfigManager.Instance.GetConfigValue<bool>(configKey))
             {
                 Plugin.s_log.LogMessage($"[{LCMPluginInfo.PLUGIN_NAME}-{debugLevel}] {message}");
             }
         }
+
+        private ConfigKey DebugLevelToConfigKey(DebugLevel debugLevel)
+        {
+            var debugLevelString = Enum.GetName(typeof(DebugLevel), debugLevel);
+            Enum.TryParse(debugLevelString + "Logging", out ConfigKey configKey);
+            return configKey;
+        }
     }
+    
 
     /// <summary>
     /// Enum representing different types of logs.
     /// </summary>
     public enum DebugLevel
     {
-        Default, PlayerEvent, EnemyEvent, MoonEvent, ItemEvent, ModLogicEvent, 
+        Default, PlayerEvent, EntityEvent, MoonEvent, ItemEvent, CoreEvent, ModLogicEvent, 
     }
+
+    
 }
