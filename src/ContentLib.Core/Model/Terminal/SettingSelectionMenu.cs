@@ -32,6 +32,7 @@ public class SettingSelectionMenu : CursorMenu
             _menus.Add(settingElement, page);
             elementsList.Add(settingElement);
         }
+        elementsList.Add(TerminalUIFactory.CreateCursorElement("Save Changes", ConfigManager.Instance.SaveConfig));
         elementsList.Sort((x, y) => string.Compare(x.Name, y.Name, StringComparison.Ordinal));
         return elementsList.ToArray();
     }
