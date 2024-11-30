@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using ContentLib.API.Exceptions.Entity;
 using ContentLib.Core;
 using ContentLib.Core.Networking;
 using ContentLib.Core.Tags;
-using ContentLib.EnemyAPI.Exceptions;
 using ContentLib.EnemyAPI.Internal;
 using UnityEngine;
 

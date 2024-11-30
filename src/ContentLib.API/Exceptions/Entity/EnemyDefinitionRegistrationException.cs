@@ -1,6 +1,6 @@
 using System;
 
-namespace ContentLib.EnemyAPI.Exceptions;
+namespace ContentLib.API.Exceptions.Entity;
 
 /// <summary>
 /// An exception that's thrown when validation for <see cref="EnemyDefinition"/> fails during registration.
