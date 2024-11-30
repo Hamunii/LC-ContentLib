@@ -1,5 +1,6 @@
 using System;
 using ContentLib.API.Model.Entity;
+using ContentLib.API.Model.Item;
 
 namespace ContentLib.API.Exceptions.Core.Manager;
 /// <summary>
@@ -60,10 +61,17 @@ public abstract class InvalidRegistrationException<T> : Exception
 }
 
 /// <summary>
-/// Exception for unsuccessful registration of an IGameEntity.
+/// Exception for an invalid IGameEntity registration.
 /// </summary>
 /// <param name="invalidEntity">The Entity that failed to register.</param>
 public class InvalidEntityRegistrationException(IGameEntity invalidEntity)
     : InvalidRegistrationException<IGameEntity>(invalidEntity);
+
+/// <summary>
+/// Exception for an invalid IGameItem registration.
+/// </summary>
+/// <param name="invalidItem">The Item that failed to register.</param>
+public class InvalidItemRegistrationException(IGameItem invalidItem)
+    : InvalidRegistrationException<IGameItem>(invalidItem);
 
     
