@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices.Model.Managers;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity;
 using UnityEngine;
 
@@ -33,7 +34,19 @@ public class EntityManager : IEntityManager
     /// Registers an entity to the manager, allowing for it to be managed via the api during game.
     /// </summary>
     /// <param name="entityToRegister">The entity to register.</param>
-    public void RegisterEntity(IGameEntity entityToRegister) => _entities.Add(entityToRegister.Id,entityToRegister);
+    public void RegisterEntity(IGameEntity entityToRegister)
+    {
+        try
+        {
+            _entities.Add(entityToRegister.Id, entityToRegister);
+        }
+        catch (Exception e)
+        {
+            //TODO add the original exception to the custom exception, as a param, to access the stack trace.
+            throw new InvalidEntityRegistrationException(entityToRegister);
+        }
+        
+    }
     
     /// <summary>
     /// Unregisters an entity from the manager, typically done on-death. 
