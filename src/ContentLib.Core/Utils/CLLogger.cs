@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using BepInEx.Logging;
+
 namespace ContentLib.Core.Utils
 {
     /// <summary>
@@ -9,37 +11,31 @@ namespace ContentLib.Core.Utils
     /// </summary>
     public class CLLogger
     {
-        private static readonly Lazy<CLLogger> instance = new Lazy<CLLogger>(() => new CLLogger());
+        private static readonly Lazy<CLLogger> instance = new (() => new CLLogger());
 
+  
         public static CLLogger Instance => instance.Value;
 
+        /// <summary>
+        /// Private constructor that creates loggers for each of the different logging options within the API config.
+        /// </summary>
         private CLLogger()
         {
-            foreach (DebugLevel logType in Enum.GetValues(typeof(DebugLevel)))
+            foreach (DebugLevel debugLevel in Enum.GetValues(typeof(DebugLevel)))
             {
-                _logSettings[logType] = false;
+                _logSettings[debugLevel] = DebugLevelToConfigKey(debugLevel);
+                _logSources[debugLevel] = Logger.CreateLogSource("Content-Lib: "+ Enum.GetName(typeof(DebugLevel), debugLevel));
             }
         }
-
-        private readonly Dictionary<DebugLevel, bool> _logSettings = new();
-
         /// <summary>
-        /// Enables logging for the specified log type.
+        /// Dictionary that directly relates Debug Level to Config Key.
         /// </summary>
-        /// <param name="debugLevel">The log type to enable.</param>
-        public void EnableLogType(DebugLevel debugLevel)
-        {
-            _logSettings[debugLevel] = true;
-        }
-
+        private readonly Dictionary<DebugLevel, ConfigKey> _logSettings = new();
+        
         /// <summary>
-        /// Disables logging for the specified log type.
+        /// Dictionary that maps the log sources to their respective Debug Level. 
         /// </summary>
-        /// <param name="debugLevel">The log type to disable.</param>
-        public void DisableLogType(DebugLevel debugLevel)
-        {
-            _logSettings[debugLevel] = false;
-        }
+        private readonly Dictionary<DebugLevel, ManualLogSource> _logSources = new();
 
         /// <summary>
         /// Logs a message that is related to a mod that 
@@ -54,18 +50,63 @@ namespace ContentLib.Core.Utils
         /// <param name="debugLevel">The type of log.</param>
         public void DebugLog(string message, DebugLevel debugLevel = DebugLevel.Default)
         {
-            if (_logSettings.TryGetValue(debugLevel, out bool isEnabled) && isEnabled)
+            if (_logSettings.TryGetValue(debugLevel, out ConfigKey configKey) 
+                && 
+                ConfigManager.Instance.GetConfigValue<bool>(configKey))
             {
-                Plugin.s_log.LogMessage($"[{LCMPluginInfo.PLUGIN_NAME}-{debugLevel}] {message}");
+                
+                _logSources[debugLevel].LogDebug($" {message}");
             }
         }
+
+        /// <summary>
+        /// Returns the config key (if it exists) that corresponds to the given Debug Level. 
+        /// </summary>
+        /// <param name="debugLevel"></param>
+        /// <returns></returns>
+        private ConfigKey DebugLevelToConfigKey(DebugLevel debugLevel)
+        {
+            var debugLevelString = Enum.GetName(typeof(DebugLevel), debugLevel);
+            Enum.TryParse(debugLevelString + "Logging", out ConfigKey configKey);
+            return configKey;
+        }
     }
+    
 
     /// <summary>
     /// Enum representing different types of logs.
     /// </summary>
     public enum DebugLevel
     {
-        Default, PlayerEvent, EnemyEvent, MoonEvent, ItemEvent, ModLogicEvent, 
+        /// <summary>
+        /// Default Logger, for any non-specific debug logs.
+        /// </summary>
+        Default, 
+        /// <summary>
+        /// Logs to do with Player Events.
+        /// </summary>
+        PlayerEvent, 
+        /// <summary>
+        /// Logs to do with Events involving in-game entities. 
+        /// </summary>
+        EntityEvent, 
+        /// <summary>
+        /// Logs to do with Events involving Moons (such as loading of moons, spawning of creatures on moons etc.
+        /// </summary>
+        MoonEvent, 
+        /// <summary>
+        /// Logs to do with Events involving in-game items, such as picking items up, using an item's actions, etc.
+        /// </summary>
+        ItemEvent, 
+        /// <summary>
+        /// Logs to do with Content-Lib Core Module logic. 
+        /// </summary>
+        CoreEvent, 
+        /// <summary>
+        /// Logs to do with Events involving the logic of a Mod that utilises the Content-Lib API. 
+        /// </summary>
+        ModLogicEvent, 
     }
+
+    
 }

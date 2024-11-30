@@ -1,11 +1,10 @@
+using System;
 using System.Linq;
-using System.Runtime.CompilerServices.Model.Managers;
 using BepInEx;
-using ContentLib.API;
 using ContentLib.API.Model;
 using UnityEngine;
 
-namespace System.Runtime.CompilerServices;
+namespace ContentLib.API;
 /// <summary>
 /// Abstract child of the BaseUnityPlugin, used to load mods that utilise the Content-Lib API. 
 /// </summary>

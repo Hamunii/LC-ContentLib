@@ -387,12 +387,18 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "WhiteSpike-Interactive_Terminal_API": {
+        "type": "Transitive",
+        "resolved": "1.2.0",
+        "contentHash": "0CeI0RvQmhciHCTQ5QyhwFJegByE7I2boVglIFPdRFll+zl3HIDBQ0WZuZn7Ft48eMfuDE0heJx3hVmVDFoHeQ=="
+      },
       "contentlib.api": {
         "type": "Project",
         "dependencies": {
           "BepInEx.Core": "[5.4.*, )",
           "LethalCompany.GameLibs.Steam": "[56.0.1-ngd.0, )",
-          "UnityEngine.Modules": "[2023.2.4, )"
+          "UnityEngine.Modules": "[2023.2.4, )",
+          "WhiteSpike-Interactive_Terminal_API": "[1.2.0, )"
         }
       }
     }
