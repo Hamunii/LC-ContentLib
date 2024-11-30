@@ -15,6 +15,7 @@ public interface IEnemy : IGameEntity
     /// </summary>
     bool IsSpawned { get; }
     
+    // TODO: Raz, maybe clarify this a bit. -Delta
     /// <summary>
     /// Check of if the Enemy is hostile or not. 
     /// </summary>
