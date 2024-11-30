@@ -1,4 +1,6 @@
-﻿using ContentLib.API.Model.Entity.Enemy.Vanilla.EyelessDog;
+﻿using System;
+using ContentLib.API.Exceptions.Core.Manager;
+using ContentLib.API.Model.Entity.Enemy.Vanilla.EyelessDog;
 using ContentLib.API.Model.Event;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Events;
@@ -83,7 +85,14 @@ public class EyelessDogPatches
         orig(self);
         
         IEnemy enemy = new LocalEyelessDog(self);
-        EntityManager.Instance.RegisterEntity(enemy);
+        try
+        {
+            EntityManager.Instance.RegisterEntity(enemy);
+        }
+        catch (InvalidEntityRegistrationException e)
+        {
+            CLLogger.Instance.DebugLog(e.ToString(), DebugLevel.EntityEvent);
+        }
         
     }
     

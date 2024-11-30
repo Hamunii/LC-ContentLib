@@ -42,8 +42,7 @@ public class EntityManager : IEntityManager
         }
         catch (Exception e)
         {
-            //TODO add the original exception to the custom exception, as a param, to access the stack trace.
-            throw new InvalidEntityRegistrationException(entityToRegister);
+            throw new InvalidEntityRegistrationException(entityToRegister,e);
         }
         
     }

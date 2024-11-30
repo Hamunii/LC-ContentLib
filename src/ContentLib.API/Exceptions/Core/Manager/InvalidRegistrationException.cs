@@ -9,22 +9,16 @@ namespace ContentLib.API.Exceptions.Core.Manager;
 /// invalid properties), followed by the stacktrace. 
 /// </summary>
 /// <typeparam name="T">Type Parameter of the instance that failed to register.</typeparam>
-public abstract class InvalidRegistrationException<T> : Exception
+public abstract class InvalidRegistrationException<T>(T invalidInstance,Exception exception) : Exception
 {
+    private readonly Exception _exception = exception;
+
     /// <summary>
     /// The instance that failed to register.
     /// </summary>
-    private T InvalidInstance { get; }
+    private T InvalidInstance { get; } = invalidInstance;
 
-    /// <summary>
-    /// Constructor that initialises the instance that failed to register.
-    /// </summary>
-    /// <param name="invalidInstance">The instance that failed to register.</param>
-    protected InvalidRegistrationException(T invalidInstance)
-    {
-        InvalidInstance = invalidInstance;
-    }
-    
+
     /// <summary>
     /// Gets the current status of the invalid instance, specifically its properties.
     /// </summary>
@@ -64,14 +58,14 @@ public abstract class InvalidRegistrationException<T> : Exception
 /// Exception for an invalid IGameEntity registration.
 /// </summary>
 /// <param name="invalidEntity">The Entity that failed to register.</param>
-public class InvalidEntityRegistrationException(IGameEntity invalidEntity)
-    : InvalidRegistrationException<IGameEntity>(invalidEntity);
+public class InvalidEntityRegistrationException(IGameEntity invalidEntity, Exception exception)
+    : InvalidRegistrationException<IGameEntity>(invalidEntity, exception);
 
 /// <summary>
 /// Exception for an invalid IGameItem registration.
 /// </summary>
 /// <param name="invalidItem">The Item that failed to register.</param>
-public class InvalidItemRegistrationException(IGameItem invalidItem)
-    : InvalidRegistrationException<IGameItem>(invalidItem);
+public class InvalidItemRegistrationException(IGameItem invalidItem, Exception exception)
+    : InvalidRegistrationException<IGameItem>(invalidItem, exception);
 
     

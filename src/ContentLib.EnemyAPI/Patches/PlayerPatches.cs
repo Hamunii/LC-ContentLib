@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.Core.Utils;
@@ -63,8 +64,17 @@ public class PlayerPatches
     {
         orig(self);
         IPlayer player = new BasePlayerInstance(self);
-        EntityManager.Instance.RegisterEntity(player);
+        try
+        {
+            EntityManager.Instance.RegisterEntity(player);
+            GameEventManager.Instance.Trigger(new BasePlayerSpawnEvent(player));
+        }
+        catch (InvalidEntityRegistrationException exception)
+        {
+            CLLogger.Instance.DebugLog(exception.ToString(), DebugLevel.EntityEvent);
+        }
         GameEventManager.Instance.Trigger(new BasePlayerSpawnEvent(player));
+
     }
 
     private class BasePlayerInstance(PlayerControllerB playerController) : IPlayer

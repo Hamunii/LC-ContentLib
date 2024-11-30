@@ -1,4 +1,6 @@
 using System;
+using ContentLib.API.Exceptions.Core.Manager;
+using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Coilhead;
 using ContentLib.entityAPI.Model.entity;
@@ -23,7 +25,14 @@ public class CoilheadPatches
     private static void CoilheadSpawn(SpringManAI springManAI)
     {
         var coilhead = new LocalCoilhead(springManAI);
-        EntityManager.Instance.RegisterEntity(coilhead);
+        try
+        {
+            EntityManager.Instance.RegisterEntity(coilhead);
+        }
+        catch (InvalidEntityRegistrationException exception)
+        {
+            CLLogger.Instance.DebugLog(exception.ToString(), DebugLevel.EntityEvent);
+        }
     }
 
     private class LocalCoilhead(SpringManAI springManAI) : ICoilhead
