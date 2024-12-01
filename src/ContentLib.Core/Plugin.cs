@@ -26,12 +26,21 @@ public class Plugin : BaseUnityPlugin
       InitPatches();
     }
   
+    /// <summary>
+    /// Initialises the primary logger for API-related logging.
+    /// </summary>
     private void InitLogger()
     {
         s_log = Logger;
         CLLogger.Instance.Log($"{LCMPluginInfo.PLUGIN_NAME} Loading!");
     }
     
+    /// <summary>
+    /// <p>Initializes the API loader instance for the client. </p>
+    /// <i>Developer Note: The loader, hooked onto a Persistent Game Object, is searched for by mods requiring it. This
+    /// allows mods to be created with just the API as a dependency, whilst still being able to find the Core-Module's
+    /// loader instance.</i>  
+    /// </summary>
     private void InitAPI()
     {
         CLLogger.Instance.Log("Initialising API Loader!");
@@ -41,6 +50,11 @@ public class Plugin : BaseUnityPlugin
         CLLogger.Instance.Log("API Loader Initialized!");
         
     }
+    
+    /// <summary>
+    /// Initialises both the Manager responsible for Content-Lib Configuration File Settings and the in-game terminal
+    /// for changing said Settings.
+    /// </summary>
     private void InitConfig()
     {
         CLLogger.Instance.Log("Initialising Config Settings!");
@@ -49,6 +63,9 @@ public class Plugin : BaseUnityPlugin
         CLLogger.Instance.Log("Config Settings Initialized!");
     }
 
+    /// <summary>
+    /// Initialises the patches required for Core-Module logic setup.
+    /// </summary>
     private void InitPatches()
     {
         CLLogger.Instance.Log("Initialising Patches!");
