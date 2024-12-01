@@ -38,6 +38,11 @@ namespace ContentLib.API.Model.Event
         private GameEventManager() { }
 
         /// <summary>
+        /// Check to see if the client the manager belongs to is the host.
+        /// </summary>
+        public bool IsHost { get; set; }
+
+        /// <summary>
         /// Subscribes an event handler (i.e. a method that takes in an implementation of IGameEvent) to its respective
         /// In-Game-Event, via its GameEventType.
         /// </summary>
@@ -45,6 +50,8 @@ namespace ContentLib.API.Model.Event
         /// <typeparam name="TEvent">The type parameter of IGameEvent child to handle.</typeparam>
         public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
         {
+            if (!IsHost)
+                return;
             Type eventType = typeof(TEvent);
             CLLogger.Instance.DebugLog($"Subscribing to {eventType.Name}");
             if (_eventHandlers.TryGetValue(eventType, out var existingHandler))
@@ -62,7 +69,6 @@ namespace ContentLib.API.Model.Event
         /// <summary>
         /// Unsubscribes a delegate from a specified Event Type.
         /// </summary>
-        /// <param name="eventType">The type of event to unsubscribe the handler from.</param>
         /// <param name="handler">The handler of the Event.</param>
         /// <typeparam name="TEvent">The type parameter of the IGameEvent child to unsuscribe the handler from.</typeparam>
         public void Unsubscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
@@ -84,6 +90,8 @@ namespace ContentLib.API.Model.Event
         /// <typeparam name="TEvent">The type parameter of the Triggered Event.</typeparam>
         public void Trigger<TEvent>(TEvent gameEvent) where TEvent : IGameEvent
         {
+            if (!IsHost)
+                return;
             Type? eventType = typeof(TEvent);
             CLLogger.Instance.Log($"$GameEventManager::Trigger: Game event type: {eventType}");
             if (!_eventHandlers.TryGetValue(eventType, out var handler)) return;
@@ -100,6 +108,8 @@ namespace ContentLib.API.Model.Event
         /// Attribute are not correctly formatted.</exception>
         public void RegisterListener(IListener listener)
         {
+            if (!IsHost)
+                return;
             CLLogger.Instance.DebugLog($"GameEventManager::RegisterListener {listener.GetType()}");
             var listenerType = listener.GetType();
             var methodsWithAttribute = listenerType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
