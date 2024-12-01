@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices.Model.Managers;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 
@@ -37,8 +39,16 @@ public class ItemManager : IItemManager
     public void RegisterItem(IGameItem itemToRegister)
 
     {
-        _items.Add(itemToRegister.Id, itemToRegister);
-        CLLogger.Instance.Log($"Registered item {itemToRegister.Id}");
+        try
+        {
+            _items.Add(itemToRegister.Id, itemToRegister);
+            CLLogger.Instance.DebugLog($"Registered item {itemToRegister.Id}", DebugLevel.ItemEvent);
+        }
+        catch (Exception exception)
+        {
+            throw new InvalidItemRegistrationException(itemToRegister, exception);
+        }
+       
     }
 
     /// <summary>

@@ -10,9 +10,5 @@
       <PackageReference Include="WhiteSpike-Interactive_Terminal_API" Version="1.2.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Exceptions\Util\" />
-    </ItemGroup>
-
 
 </Project>

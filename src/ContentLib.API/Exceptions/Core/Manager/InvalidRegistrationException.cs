@@ -1,4 +1,5 @@
 using System;
+using ContentLib.API.Exceptions.Util;
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Item;
 
@@ -23,26 +24,7 @@ public abstract class InvalidRegistrationException<T>(T invalidInstance,Exceptio
     /// Gets the current status of the invalid instance, specifically its properties.
     /// </summary>
     /// <returns>string containing the properties of the invalid instance.</returns>
-    public string GetFailedInstancePropertiesStatus()
-    {
-        var properties = typeof(T).GetProperties();
-        var result = "";
-
-        foreach (var property in properties)
-        {
-            try
-            {
-                var value = property.GetValue(InvalidInstance);
-                result += $"{property.Name}: {value}, ";
-            }
-            catch
-            {
-                result += $"{property.Name}: THREW EXCEPTION, ";
-            }
-        }
-
-        return result.TrimEnd(' ', ',');
-    }
+  
 
     /// <inheritdoc />
     public override string Message => $"{base.Message}\nRegistration of type {InvalidInstance.GetType().Name} failed!";
@@ -50,7 +32,8 @@ public abstract class InvalidRegistrationException<T>(T invalidInstance,Exceptio
     /// <inheritdoc />
     public override string ToString() =>
         $"{Message}\n" + 
-        $"Failed Object Properties:\n{GetFailedInstancePropertiesStatus()}\n\n" +
+        $"Failed Object Properties:\n{DebugUtils.GetFailedInstancePropertiesStatus(invalidInstance)}\n\n" +
+        $"Reason: {_exception.Message}\n"+
         $"Stack Trace:\n{StackTrace}";
 }
 
