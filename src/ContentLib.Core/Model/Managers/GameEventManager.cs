@@ -46,7 +46,7 @@ namespace ContentLib.API.Model.Event
         public void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IGameEvent
         {
             Type eventType = typeof(TEvent);
-            CLLogger.Instance.DebugLog($"Subscribing to {eventType.Name}");
+            CLLogger.Instance.DebugLog($"Subscribing to {eventType.Name}", DebugLevel.CoreEvent);
             if (_eventHandlers.TryGetValue(eventType, out var existingHandler))
             {
                 _eventHandlers[eventType] = Delegate.Combine(existingHandler, handler);
@@ -85,7 +85,7 @@ namespace ContentLib.API.Model.Event
         public void Trigger<TEvent>(TEvent gameEvent) where TEvent : IGameEvent
         {
             Type? eventType = typeof(TEvent);
-            CLLogger.Instance.Log($"$GameEventManager::Trigger: Game event type: {eventType}");
+            CLLogger.Instance.DebugLog($"$GameEventManager::Trigger: Game event type: {eventType}", DebugLevel.CoreEvent);
             if (!_eventHandlers.TryGetValue(eventType, out var handler)) return;
             
             var eventHandler = handler as Action<TEvent>;
@@ -100,7 +100,7 @@ namespace ContentLib.API.Model.Event
         /// Attribute are not correctly formatted.</exception>
         public void RegisterListener(IListener listener)
         {
-            CLLogger.Instance.DebugLog($"GameEventManager::RegisterListener {listener.GetType()}");
+            CLLogger.Instance.DebugLog($"Registering listener of type {listener.GetType()}", DebugLevel.CoreEvent);
             var listenerType = listener.GetType();
             var methodsWithAttribute = listenerType.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
                 .Where(method => method.GetCustomAttributes(typeof(EventDelegateAttribute), true).Any());
@@ -131,7 +131,9 @@ namespace ContentLib.API.Model.Event
                 {
                     throw new InvalidOperationException($"Failed to create delegate for method {method.Name} with event type {eventType.FullName}.");
                 }
-                CLLogger.Instance.DebugLog($"The subscribe method {subscribeMethod?.Name} has been called with delegate {actionDelegate.GetMethodInfo().Name}");
+                CLLogger.Instance
+                    .DebugLog($"The subscribe method {subscribeMethod?.Name} has been called with delegate " +
+                              $"{actionDelegate.GetMethodInfo().Name}", DebugLevel.CoreEvent);
 
                 subscribeMethod?.Invoke(this, new object[] { actionDelegate });
             }

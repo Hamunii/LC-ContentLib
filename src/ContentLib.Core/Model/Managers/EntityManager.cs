@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity;
+using ContentLib.Core.Utils;
 using UnityEngine;
 
 namespace ContentLib.entityAPI.Model.entity;
@@ -27,6 +28,7 @@ public class EntityManager : IEntityManager
     private EntityManager()
     {
         _entities = new Dictionary<ulong, IGameEntity>();
+        CLLogger.Instance.DebugLog("Entity Manager initialized successfully", DebugLevel.CoreEvent);
     }
 
 
@@ -36,6 +38,8 @@ public class EntityManager : IEntityManager
     /// <param name="entityToRegister">The entity to register.</param>
     public void RegisterEntity(IGameEntity entityToRegister)
     {
+        CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {entityToRegister.Id}"
+            , DebugLevel.EntityEvent);
         try
         {
             _entities.Add(entityToRegister.Id, entityToRegister);
@@ -58,7 +62,7 @@ public class EntityManager : IEntityManager
     /// </summary>
     public void UnRegisterAllEntities()
     {
-        Debug.Log("UnRegistering All Enemies in Level");
+        CLLogger.Instance.DebugLog("Unregistering all entities in level!", DebugLevel.EntityEvent);
         _entities.Clear();
     }
 
@@ -70,8 +74,10 @@ public class EntityManager : IEntityManager
     /// <returns>The entity with the corresponding id</returns>
     public IGameEntity GetEntity(ulong id)
     {
+        CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {id}", DebugLevel.EntityEvent);
         if (_entities.TryGetValue(id, out var entity))
         {
+            CLLogger.Instance.DebugLog($"Found Game Entity with id of {id}", DebugLevel.EntityEvent);
             return entity;
         }
         throw new KeyNotFoundException($"entity with ID {id} was not found.");
