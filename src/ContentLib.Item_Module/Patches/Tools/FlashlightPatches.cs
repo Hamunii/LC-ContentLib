@@ -3,8 +3,8 @@ using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
 using ContentLib.API.Model.Item.Tools.Types;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
-using ContentLib.Item_Module.Model;
 using UnityEngine;
 
 namespace ContentLib.Item_Module.Patches;

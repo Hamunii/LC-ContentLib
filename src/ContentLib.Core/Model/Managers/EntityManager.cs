@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices.Model.Managers;
 using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity;
 using ContentLib.Core.Utils;
-using UnityEngine;
 
-namespace ContentLib.entityAPI.Model.entity;
+namespace ContentLib.Core.Model.Managers;
 
 public class EntityManager : IEntityManager
 {

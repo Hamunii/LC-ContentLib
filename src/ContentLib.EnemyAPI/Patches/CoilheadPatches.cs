@@ -1,9 +1,9 @@
 using System;
 using ContentLib.API.Exceptions.Core.Manager;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Coilhead;
-using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;

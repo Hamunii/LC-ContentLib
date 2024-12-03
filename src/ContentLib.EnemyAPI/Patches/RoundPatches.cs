@@ -1,5 +1,5 @@
+using ContentLib.Core.Model.Managers;
 using ContentLib.EnemyAPI.Model.Enemy;
-using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;

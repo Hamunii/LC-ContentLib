@@ -2,10 +2,10 @@
 using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity.Enemy.Vanilla.EyelessDog;
 using ContentLib.API.Model.Event;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Events;
 using ContentLib.EnemyAPI.Model.Enemy;
-using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;

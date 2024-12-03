@@ -1,10 +1,10 @@
 using System;
 using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Event;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
-using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;

@@ -5,7 +5,7 @@ using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Item;
 using ContentLib.Core.Utils;
 
-namespace ContentLib.Item_Module.Model;
+namespace ContentLib.Core.Model.Managers;
 
 /// <summary>
 /// Manager responsible for the registration and handling of IGameItems. 

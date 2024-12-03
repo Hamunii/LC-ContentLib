@@ -1,4 +1,4 @@
-using ContentLib.Item_Module.Model;
+using ContentLib.Core.Model.Managers;
 
 namespace ContentLib.Item_Module.Patches;
 /// <summary>

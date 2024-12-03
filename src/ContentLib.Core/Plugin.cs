@@ -26,6 +26,5 @@ public class Plugin : BaseUnityPlugin
         apiLoaderObject.AddComponent<APILoader>();
         DontDestroyOnLoad(apiLoaderObject);
         InteractiveTerminalManager.RegisterApplication<SettingsTerminal>("Settings", false);
-
     }
 }

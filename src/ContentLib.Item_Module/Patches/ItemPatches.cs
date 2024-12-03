@@ -1,10 +1,9 @@
 using ContentLib.API.Model.Entity;
 using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
-using ContentLib.entityAPI.Model.entity;
-using ContentLib.Item_Module.Model;
 using On.GameNetcodeStuff;
 using Unity.Netcode;
 using UnityEngine;
