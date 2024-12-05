@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using ContentLib.API.Model.Terminal;
-using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
 using InteractiveTerminalAPI.UI.Application;
 using InteractiveTerminalAPI.UI.Cursor;
@@ -13,7 +12,6 @@ namespace ContentLib.Core.Model.Terminal;
 /// </summary>
 internal class SettingsTerminal : InteractiveTerminalApplication
 {
-    private readonly SettingsManager _settingsManager = SettingsManager.Instance;
 
    
     #region Menus
@@ -73,9 +71,9 @@ internal class SettingsTerminal : InteractiveTerminalApplication
             TerminalUIFactory
                 .CreateCursorElement("Logging", LoggingPageSwitch),
             TerminalUIFactory
-                .CreateCursorElement("Events", _settingsManager.MoveToEventsSettingPage),
+                .CreateCursorElement("Events", null),
             TerminalUIFactory
-                .CreateCursorElement("Dependencies", _settingsManager.MoveDependenciesToSettingPage),
+                .CreateCursorElement("Dependencies", null),
         };
         return cursorElements.ToArray();
     }

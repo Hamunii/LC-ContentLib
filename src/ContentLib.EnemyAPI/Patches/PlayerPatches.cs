@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity.Player;
 using ContentLib.API.Model.Event;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
-using ContentLib.entityAPI.Model.entity;
 using Unity.Netcode;
 using UnityEngine;
 using PlayerControllerB = GameNetcodeStuff.PlayerControllerB;
@@ -18,37 +19,16 @@ public class PlayerPatches
     public static void Init()
     {
         On.GameNetcodeStuff.PlayerControllerB.Start += PlayerControllerBOnStart;
-        On.GameNetcodeStuff.PlayerControllerB.PlayerJumpedServerRpc += PlayerControllerBOnPlayerJumpedServerRpc;
-        On.GameNetcodeStuff.PlayerControllerB.PlayerJump += PlayerControllerBOnPlayerJump;
-    }
+        On.GameNetcodeStuff.PlayerControllerB.PlayJumpAudio += PlayerControllerBOnPlayJumpAudio;
+     }
 
-    /// <summary>
-    /// Patch for triggering host player jump events. <i>Developer Note: For some reason, the jump ServerRpc
-    /// doesn't trigger on the host client, hence the need for this patch.</i>
-    /// </summary>
-    /// <param name="orig">The original method to patch.</param>
-    /// <param name="self">The player controller calling the method.</param>
-    /// <returns>The IEnumerator instance for the method.</returns>
-    private static IEnumerator PlayerControllerBOnPlayerJump(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJump orig, PlayerControllerB self)
+    private static void PlayerControllerBOnPlayJumpAudio(On.GameNetcodeStuff.PlayerControllerB.orig_PlayJumpAudio orig, PlayerControllerB self)
     {
-        IEnumerator result = orig(self);
-        GameEventManager.Instance.Trigger(new BasePlayerJumpEvent((IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId)));
-     
-        return result;
-    }
-
-    /// <summary>
-    /// Patch for triggering client side player jump events.
-    /// </summary>
-    /// <param name="orig">The original method to patch.</param>
-    /// <param name="self">The player controller calling the method.</param>
-    private static void PlayerControllerBOnPlayerJumpedServerRpc(On.GameNetcodeStuff.PlayerControllerB.orig_PlayerJumpedServerRpc orig, PlayerControllerB self)
-    {
-        var isServerExec = self.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server;
+        CLLogger.Instance.Log("TESTING JUMPY AUDIO THING YAY!");
+        var player = (IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId);
+        CLLogger.Instance.DebugLog($"Player with Id '{player.Id}' jumped via Jump Audio", DebugLevel.EntityEvent);
+        GameEventManager.Instance.Trigger(new BasePlayerJumpEvent(player));
         orig(self);
-        if (!isServerExec)
-            return;
-        GameEventManager.Instance.Trigger(new BasePlayerJumpEvent((IPlayer) EntityManager.Instance.GetEntity(self.NetworkObjectId)));
     }
 
     /// <summary>
@@ -63,8 +43,17 @@ public class PlayerPatches
     {
         orig(self);
         IPlayer player = new BasePlayerInstance(self);
-        EntityManager.Instance.RegisterEntity(player);
+        try
+        {
+            EntityManager.Instance.RegisterEntity(player);
+            GameEventManager.Instance.Trigger(new BasePlayerSpawnEvent(player));
+        }
+        catch (InvalidEntityRegistrationException exception)
+        {
+            CLLogger.Instance.DebugLog(exception.ToString(), DebugLevel.EntityEvent);
+        }
         GameEventManager.Instance.Trigger(new BasePlayerSpawnEvent(player));
+
     }
 
     private class BasePlayerInstance(PlayerControllerB playerController) : IPlayer
@@ -95,7 +84,6 @@ public class PlayerPatches
                 return;
             }
             
-            //TODO fix this logic? Maybe move to teleporter patches?
             if (Teleporter.cooldownTime > 0.0f)
             {
                 CLLogger.Instance.Log($"Cooldown Timer Value: {Teleporter.cooldownTime}");

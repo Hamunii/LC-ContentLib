@@ -1,6 +1,6 @@
 using ContentLib.API.Model.Item;
+using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
-using ContentLib.Item_Module.Model;
 
 namespace ContentLib.Item_Module.Patches.Scrap
 {

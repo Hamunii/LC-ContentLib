@@ -7,7 +7,7 @@ namespace ContentLib.Core.Loader;
 
 public class APILoader: MonoBehaviour, IAPILoader
 {
-    public IEntityManager EntityManager => entityAPI.Model.entity.EntityManager.Instance;
+    public IEntityManager EntityManager => Model.Managers.EntityManager.Instance;
     public IGameEventManager GameEventManager => API.Model.Event.GameEventManager.Instance;
-    public IItemManager ItemManager => Item_Module.Model.ItemManager.Instance;
+    public IItemManager ItemManager => Model.Managers.ItemManager.Instance;
 }

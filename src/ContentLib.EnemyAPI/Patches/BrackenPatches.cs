@@ -1,8 +1,10 @@
 using System;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Event;
+using ContentLib.Core.Model.Managers;
+using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using ContentLib.EnemyAPI.Model.Enemy.Vanilla.Bracken;
-using ContentLib.entityAPI.Model.entity;
 using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Patches;
@@ -19,7 +21,14 @@ public class BrackenPatches
     {
         orig(self);
         IEnemy vanillaBrackenEnemy = new LocalBracken(self);
-        EntityManager.Instance.RegisterEntity(vanillaBrackenEnemy);
+        try
+        {
+            EntityManager.Instance.RegisterEntity(vanillaBrackenEnemy);
+        }
+        catch (InvalidEntityRegistrationException exception)
+        {
+            CLLogger.Instance.DebugLog(exception.ToString(), DebugLevel.EntityEvent);
+        }
     }
     private static void FlowerManAI_OnCollideWithPlayer(On.FlowermanAI.orig_OnCollideWithPlayer orig, FlowermanAI self, Collider other)
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices.Model.Managers;
+using ContentLib.API.Exceptions.Core.Manager;
 using ContentLib.API.Model.Entity;
-using UnityEngine;
+using ContentLib.Core.Utils;
 
-namespace ContentLib.entityAPI.Model.entity;
+namespace ContentLib.Core.Model.Managers;
 
 public class EntityManager : IEntityManager
 {
@@ -26,6 +26,7 @@ public class EntityManager : IEntityManager
     private EntityManager()
     {
         _entities = new Dictionary<ulong, IGameEntity>();
+        CLLogger.Instance.DebugLog("Entity Manager initialized successfully", DebugLevel.CoreEvent);
     }
 
 
@@ -33,7 +34,22 @@ public class EntityManager : IEntityManager
     /// Registers an entity to the manager, allowing for it to be managed via the api during game.
     /// </summary>
     /// <param name="entityToRegister">The entity to register.</param>
-    public void RegisterEntity(IGameEntity entityToRegister) => _entities.Add(entityToRegister.Id,entityToRegister);
+    public void RegisterEntity(IGameEntity entityToRegister)
+    {
+    
+        try
+        {
+            CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {entityToRegister.Id}"
+                , DebugLevel.EntityEvent);
+            _entities.Add(entityToRegister.Id, entityToRegister);
+            
+        }
+        catch (Exception e)
+        {
+            throw new InvalidEntityRegistrationException(entityToRegister,e);
+        }
+        
+    }
     
     /// <summary>
     /// Unregisters an entity from the manager, typically done on-death. 
@@ -46,7 +62,7 @@ public class EntityManager : IEntityManager
     /// </summary>
     public void UnRegisterAllEntities()
     {
-        Debug.Log("UnRegistering All Enemies in Level");
+        CLLogger.Instance.DebugLog("Unregistering all entities in level!", DebugLevel.EntityEvent);
         _entities.Clear();
     }
 
@@ -58,8 +74,10 @@ public class EntityManager : IEntityManager
     /// <returns>The entity with the corresponding id</returns>
     public IGameEntity GetEntity(ulong id)
     {
+        CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {id}", DebugLevel.EntityEvent);
         if (_entities.TryGetValue(id, out var entity))
         {
+            CLLogger.Instance.DebugLog($"Found Game Entity with id of {id}", DebugLevel.EntityEvent);
             return entity;
         }
         throw new KeyNotFoundException($"entity with ID {id} was not found.");
