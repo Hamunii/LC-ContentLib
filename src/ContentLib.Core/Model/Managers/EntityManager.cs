@@ -36,11 +36,13 @@ public class EntityManager : IEntityManager
     /// <param name="entityToRegister">The entity to register.</param>
     public void RegisterEntity(IGameEntity entityToRegister)
     {
-        CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {entityToRegister.Id}"
-            , DebugLevel.EntityEvent);
+    
         try
         {
+            CLLogger.Instance.DebugLog($"Attempting to register Game Entity with id of {entityToRegister.Id}"
+                , DebugLevel.EntityEvent);
             _entities.Add(entityToRegister.Id, entityToRegister);
+            
         }
         catch (Exception e)
         {
