@@ -33,5 +33,6 @@ public class Plugin : BaseUnityPlugin
         RemoteFunctionalScrapPatches.Init();
         WhoopieCushionFunctionalScrapPatches.Init();
         ScrapPatches.Init();
+        SoccerBallPatches.Init();
     }
 }

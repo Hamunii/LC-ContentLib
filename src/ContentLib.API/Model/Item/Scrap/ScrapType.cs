@@ -13,6 +13,6 @@ public enum ScrapType
     Gift, GoldBar, Hairdryer, MagnifyingGlass, MetalSheet, CookieMoldPan, Mug, PerfumeBottle, OldPhone,
     JarOfPickles, PillBottle, PlasticCup, Hive, Remote, Ring, ToyRobot, RubberDucky, RedSoda, SteeringWheel, TeaKettle,
     ToiletPaper, Toothpaste, ToyCube, ToyTrain, Tragedy, ZedDog,
-    Shotgun
+    Shotgun, SoccerBall
 }
 

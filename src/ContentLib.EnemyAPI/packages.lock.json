@@ -26,9 +26,9 @@
       },
       "LethalCompany.GameLibs.Steam": {
         "type": "Direct",
-        "requested": "[56.0.1-ngd.0, )",
-        "resolved": "56.0.1-ngd.0",
-        "contentHash": "wzePk10ngsSmQTjd5CnYykD8KTTNZoGXN8Npr00VgmhRm1gisG0ZcJbdvXRaeREtNv8pLbLkThk+He4xXOm6YQ==",
+        "requested": "[67.0.0-ngd.0, )",
+        "resolved": "67.0.0-ngd.0",
+        "contentHash": "aalLgTolq6NNlSmnYrgboma+/Y4tMBVIDibtKeV3R1XX1aM8yeayWjjx4lYRkmfpeamtBkwxYh6ck/il4FrtHQ==",
         "dependencies": {
           "Newtonsoft.JSON": "13.0.3",
           "UnityEngine.Modules": "2022.3.9"
@@ -397,7 +397,7 @@
         "dependencies": {
           "BepInEx.Core": "[5.4.*, )",
           "ContentLib.API": "[1.0.0, )",
-          "LethalCompany.GameLibs.Steam": "[56.0.1-ngd.0, )",
+          "LethalCompany.GameLibs.Steam": "[67.0.0-ngd.0, )",
           "UnityEngine.Modules": "[2023.2.4, )"
         }
       },
@@ -405,7 +405,7 @@
         "type": "Project",
         "dependencies": {
           "BepInEx.Core": "[5.4.*, )",
-          "LethalCompany.GameLibs.Steam": "[56.0.1-ngd.0, )",
+          "LethalCompany.GameLibs.Steam": "[67.0.0-ngd.0, )",
           "UnityEngine.Modules": "[2023.2.4, )",
           "WhiteSpike-Interactive_Terminal_API": "[1.2.0, )"
         }
