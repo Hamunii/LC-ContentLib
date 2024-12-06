@@ -1,8 +1,8 @@
-using ContentLib.API.Model.Mods;
+using ContentLib.EnemyAPI.Model.Enemy;
 
-namespace ContentLib.EnemyAPI.Model.Enemy;
+namespace ContentLib.API.Model.Mods.Content.Types;
 
-public interface ICustomEnemy : IEnemy, ICustomContent
+public interface ICustomEnemyContent : IEnemy, ICustomContent
 {
     
 }

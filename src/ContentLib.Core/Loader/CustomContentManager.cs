@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ContentLib.API.Model.Mods;
+using ContentLib.API.Model.Mods.Content.Types;
 using ContentLib.Core.Utils;
 using ContentLib.EnemyAPI.Model.Enemy;
 using UnityEngine;
@@ -17,7 +18,7 @@ public class CustomContentManager
     {
         _registrationActions = new Dictionary<Type, Action<ICustomContent>>
         {
-            { typeof(ICustomEnemy), RegisterEnemy },
+            { typeof(ICustomEnemyContent), RegisterEnemy },
         };
         
     }
