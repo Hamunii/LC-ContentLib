@@ -1,7 +1,5 @@
-using System;
+
 using ContentLib.Core.Utils;
-using ContentLib.EnemyAPI.Model.Enemy;
-using UnityEngine;
 
 namespace ContentLib.EnemyAPI.Model.Enemy.Custom
 {
@@ -19,6 +17,7 @@ namespace ContentLib.EnemyAPI.Model.Enemy.Custom
             
         }
 
+        
         public EnemyType Create()
         {
             EnemyTypeBuilder builder = new EnemyTypeBuilder();

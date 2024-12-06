@@ -4,14 +4,14 @@ using ContentLib.Core.Utils;
 
 namespace ContentLib.Item_Module.Patches.Scrap
 {
-    public abstract class BasePatch<T, U> where T : GrabbableObject where U : class
+    public abstract class BaseFunctionalScrapPatch<T, U> where T : GrabbableObject where U : class
     {
-        protected static void Init<V>() where V : BasePatch<T, U>, new()
+        protected static void Init<V>() where V : BaseFunctionalScrapPatch<T, U>, new()
         {
             Patch<V>();
         }
 
-        private static void Patch<V>() where V : BasePatch<T, U>, new()
+        private static void Patch<V>() where V : BaseFunctionalScrapPatch<T, U>, new()
         {
             CLLogger.Instance.Log($"Performing {typeof(V).Name}");
             On.GrabbableObject.Start += (orig, self) =>

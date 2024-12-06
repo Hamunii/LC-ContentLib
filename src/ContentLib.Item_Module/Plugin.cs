@@ -29,8 +29,9 @@ public class Plugin : BaseUnityPlugin
         ItemRoundPatches.Init();
         ItemPatches.Init();
         FlashlightPatches.Init();
-        KeyPatches.Init();
-        RemotePatches.Init();
-        WhoopieCushionPatches.Init();
+        KeyFunctionalScrapPatches.Init();
+        RemoteFunctionalScrapPatches.Init();
+        WhoopieCushionFunctionalScrapPatches.Init();
+        ScrapPatches.Init();
     }
 }

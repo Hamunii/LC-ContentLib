@@ -13,8 +13,4 @@
     <ProjectReference Include="../ContentLib.EnemyAPI/ContentLib.EnemyAPI.csproj" private = "false"/>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
 </Project>

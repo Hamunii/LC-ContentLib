@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace ContentLib.Item_Module.Patches.Scrap;
 
-public class WhoopieCushionPatches : BasePatch<WhoopieCushionItem,IWhoopieCoushin>
+public class WhoopieCushionFunctionalScrapPatches : BaseFunctionalScrapPatch<WhoopieCushionItem,IWhoopieCoushin>
 {
     public static void Init()
     {
-        BasePatch<WhoopieCushionItem,IWhoopieCoushin>.Init<WhoopieCushionPatches>();
+        BaseFunctionalScrapPatch<WhoopieCushionItem,IWhoopieCoushin>.Init<WhoopieCushionFunctionalScrapPatches>();
     }
     protected override IWhoopieCoushin CreateItem(WhoopieCushionItem instance)
     {
@@ -20,6 +20,7 @@ public class WhoopieCushionPatches : BasePatch<WhoopieCushionItem,IWhoopieCoushi
     private class WhoopieCoushionImpl(WhoopieCushionItem whoopieCushionItem) : BaseScrapItem(whoopieCushionItem),IWhoopieCoushin
     {
         protected override string ScrapName => "Whoopie Cushion";
+        public ScrapType Type => ScrapType.WhoopieCushion;
     }
     
 }
