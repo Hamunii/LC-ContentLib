@@ -121,7 +121,6 @@ public class ItemPatches
     /// <returns>True if the Network Behaviour's execution stage is server-side, False otherwise.</returns>
     private static bool IsServerCall(NetworkBehaviour networkBehaviour)
     {
-        //TODO needs to have the logs added back in when the debug system is fully setup
         if (networkBehaviour.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server)
         {
             CLLogger.Instance.DebugLog($"IsServerCall returned True",DebugLevel.ItemEvent);

@@ -85,3 +85,23 @@ public abstract class ItemSpawnedEvent : IItemEvent
     public bool IsCancelled { get; set; }
     
 }
+
+/// <summary>
+/// An event that represents an item being moved via some exterior force (such as the soccer ball being kicked)
+/// </summary>
+public abstract class ItemMovedEvent : IItemEvent
+{
+    /// <inheritdoc />
+    public bool IsCancelled { get; set; }
+    
+    /// <inheritdoc />
+    public Vector3 Position { get; }
+    
+    /// <inheritdoc />
+    public IGameItem? Item { get; }
+    
+    /// <summary>
+    /// Represents the current velocity of the moved item.
+    /// </summary>
+    public Vector3 Velocity { get; }
+}
