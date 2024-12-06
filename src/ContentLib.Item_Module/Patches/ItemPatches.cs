@@ -112,6 +112,7 @@ public class ItemPatches
         public override IGameItem? Item => ItemManager.Instance.GetItem(item.NetworkObjectId);
         public override IGameEntity DroppingEntity => EntityManager.Instance.GetEntity(playerController.NetworkObjectId);
     }
+    //TODO need to move IsServerCall methods to a utility class I think.
 
     /// <summary>
     /// Method for checking if the current execution stage a given Network Behaviour instance is server-side. Used to

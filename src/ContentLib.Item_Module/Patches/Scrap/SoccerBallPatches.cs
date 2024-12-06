@@ -73,6 +73,7 @@ public class SoccerBallPatches
         public override Vector3 Destination => destination;
     }
     
+    //TODO need to move IsServerCall methods to a utility class I think.
     private static bool IsServerCall(NetworkBehaviour networkBehaviour)
     {
         if (networkBehaviour.__rpc_exec_stage == NetworkBehaviour.__RpcExecStage.Server)
