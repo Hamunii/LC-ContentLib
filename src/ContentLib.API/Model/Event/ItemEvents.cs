@@ -105,3 +105,24 @@ public abstract class ItemMovedEvent : IItemEvent
     /// </summary>
     public Vector3 Velocity { get; }
 }
+
+/// <summary>
+/// An event that represents when a sound is produced due to a Player colliding with an item (stepping on a whoopie
+/// cushion for example). 
+/// </summary>
+public abstract class ItemCollisionSoundEvent : IItemEvent
+{
+    /// <inheritdoc />
+    public bool IsCancelled { get; set; }
+    
+    /// <inheritdoc />
+    public abstract Vector3 Position { get; }
+    
+    /// <inheritdoc />
+    public abstract IGameItem? Item { get; }
+    
+    /// <summary>
+    /// Array of all the audio clips that could play due to the collision.
+    /// </summary>
+    public abstract AudioClip[]? PotentialCollisionSounds { get; set; }
+}
