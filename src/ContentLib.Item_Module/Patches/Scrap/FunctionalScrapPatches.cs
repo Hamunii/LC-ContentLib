@@ -17,14 +17,14 @@ namespace ContentLib.Item_Module.Patches.Scrap
 
         private static void Patch<V>() where V : BaseFunctionalScrapPatch<T, U>, new()
         {
-            CLLogger.Instance.Log($"Performing {typeof(V).Name}");
+            CLLogger.Instance.DebugLog($"Performing {typeof(V).Name}", DebugLevel.CoreEvent);
             On.GrabbableObject.Start += (orig, self) =>
             {
                 orig(self);
 
                 if (self is not T targetInstance)
                 {
-                    CLLogger.Instance.DebugLog($"{typeof(T).Name} check was null.");
+                    CLLogger.Instance.DebugLog($"{typeof(T).Name} check was null.", DebugLevel.CoreEvent);
                     return;
                 }
 
@@ -43,9 +43,10 @@ namespace ContentLib.Item_Module.Patches.Scrap
                 return;
             try
             {
-                CLLogger.Instance.Log($"Registering item {itemInstance.GetType().Name}.");
-                ItemManager.Instance.RegisterItem(item);
-                GameEventManager.Instance.Trigger(new ScrapSpawnEvent(item));
+                CLLogger.Instance.DebugLog($"Registering item {itemInstance.GetType().Name}.", DebugLevel.CoreEvent);
+                ItemManager.Instance.RegisterOrReplaceItem(item);
+                ItemSpawnedEvent spawnedEvent = new ScrapSpawnEvent(item);
+                GameEventManager.Instance.Trigger(spawnedEvent);
             }
             catch (Exception ex)
             {

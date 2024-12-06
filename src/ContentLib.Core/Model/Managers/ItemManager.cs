@@ -51,6 +51,25 @@ public class ItemManager : IItemManager
     }
 
     /// <summary>
+    /// Registers an item to the manager, or replaces it if another item with the same id already exists within the
+    /// item manager. This is a workaround to ensure that unique items can overwrite generic enum generated items
+    /// within the manager. This ensures that no priority nonsense needs to be used. 
+    /// </summary>
+    /// <param name="itemToRegister">The item to register.</param>
+    public void RegisterOrReplaceItem(IGameItem itemToRegister)
+    {
+        try
+        {
+            _items[itemToRegister.Id] = itemToRegister;
+        }
+        catch (Exception exception)
+        { 
+            throw new InvalidItemRegistrationException(itemToRegister, exception);
+        }
+        
+    }
+
+    /// <summary>
     /// Unregisters an item from the manager, not typically called, but might have unique circumstances, such as a mod
     /// that destroys items. 
     /// </summary>

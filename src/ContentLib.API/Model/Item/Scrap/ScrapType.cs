@@ -1,3 +1,5 @@
+using ContentLib.API.Util;
+
 namespace ContentLib.API.Model.Item.Scrap;
 
 /// <summary>
@@ -13,3 +15,4 @@ public enum ScrapType
     ToiletPaper, Toothpaste, ToyCube, ToyTrain, Tragedy, ZedDog,
     Shotgun
 }
+

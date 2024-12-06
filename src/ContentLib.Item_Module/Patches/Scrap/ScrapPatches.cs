@@ -23,7 +23,8 @@ public class ScrapPatches
             return;
         IVanillaScrap vanillaScrap = new VanillaScrapItem(self, scrapType.Value);
         ItemManager.Instance.RegisterItem(vanillaScrap);
-        GameEventManager.Instance.Trigger(new VanillaScrapSpawnEvent(vanillaScrap));
+        ItemSpawnedEvent spawnEvent = new VanillaScrapSpawnEvent(vanillaScrap);
+        GameEventManager.Instance.Trigger(spawnEvent);
     }
 
 
