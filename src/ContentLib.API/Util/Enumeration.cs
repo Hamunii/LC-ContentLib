@@ -59,20 +59,6 @@ public abstract class Enumeration<TValue> : IComparable where TValue : IComparab
     }
 
     public override int GetHashCode() => EqualityComparer<TValue>.Default.GetHashCode(_value);
-
-    public static int AbsoluteDifference(Enumeration<TValue> firstValue, Enumeration<TValue> secondValue)
-    {
-        if (typeof(TValue) != typeof(int))
-        {
-            throw new InvalidOperationException("AbsoluteDifference is only supported for int-based Enumeration.");
-        }
-
-        var firstInt = Convert.ToInt32(firstValue.Value);
-        var secondInt = Convert.ToInt32(secondValue.Value);
-
-        return Math.Abs(firstInt - secondInt);
-    }
-
     public static T FromValue<T>(TValue value) where T : Enumeration<TValue>, new()
     {
         var matchingItem = parse<T, TValue>(value, "value", item => EqualityComparer<TValue>.Default.Equals(item.Value, value));
