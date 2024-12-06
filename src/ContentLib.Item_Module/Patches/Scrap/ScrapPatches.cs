@@ -1,8 +1,9 @@
 using System;
 using ContentLib.API.Model.Entity;
+using ContentLib.API.Model.Event;
+using ContentLib.API.Model.Item;
 using ContentLib.API.Model.Item.Scrap;
 using ContentLib.Core.Model.Managers;
-using ContentLib.Core.Utils;
 using UnityEngine;
 
 namespace ContentLib.Item_Module.Patches.Scrap;
@@ -22,6 +23,7 @@ public class ScrapPatches
             return;
         IVanillaScrap vanillaScrap = new VanillaScrapItem(self, scrapType.Value);
         ItemManager.Instance.RegisterItem(vanillaScrap);
+        GameEventManager.Instance.Trigger(new VanillaScrapSpawnEvent(vanillaScrap));
     }
 
 
@@ -52,10 +54,13 @@ public class ScrapPatches
         {
             var type = (ScrapType)scrapTypes.GetValue(i);
             if(type.ToString().ToLower().Contains(refactoredName)){return type;}
-            CLLogger.Instance.Log($"Scrap type {type.ToString()} not the item {itemName}");
-            
         }
-
         return null;
+    }
+
+    private class VanillaScrapSpawnEvent(IVanillaScrap scrap) : ItemSpawnedEvent
+    {
+        public override Vector3 Position => scrap.Location;
+        public override IGameItem? Item => scrap;
     }
 }

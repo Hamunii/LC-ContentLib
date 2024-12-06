@@ -72,5 +72,16 @@ public abstract class ItemDroppedEvent : IItemEvent
     /// The Game Entity that dropped the item.
     /// </summary>
     public abstract IGameEntity DroppingEntity { get; } 
+}
+public abstract class ItemSpawnedEvent : IItemEvent
+{
+    /// <inheritdoc />
+    public abstract Vector3 Position { get; }
+    
+    /// <inheritdoc />
+    public abstract IGameItem? Item { get; }
+    
+    /// <inheritdoc />
+    public bool IsCancelled { get; set; }
     
 }

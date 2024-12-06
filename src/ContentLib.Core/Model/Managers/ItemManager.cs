@@ -42,7 +42,6 @@ public class ItemManager : IItemManager
         try
         {
             _items.Add(itemToRegister.Id, itemToRegister);
-            CLLogger.Instance.DebugLog($"Registered item {itemToRegister.Id}", DebugLevel.ItemEvent);
         }
         catch (Exception exception)
         {

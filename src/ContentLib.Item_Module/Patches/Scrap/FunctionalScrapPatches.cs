@@ -1,6 +1,10 @@
+using System;
+using ContentLib.API.Exceptions.Core.Manager;
+using ContentLib.API.Model.Event;
 using ContentLib.API.Model.Item;
 using ContentLib.Core.Model.Managers;
 using ContentLib.Core.Utils;
+using UnityEngine;
 
 namespace ContentLib.Item_Module.Patches.Scrap
 {
@@ -35,15 +39,26 @@ namespace ContentLib.Item_Module.Patches.Scrap
 
         protected virtual void RegisterItem(U itemInstance)
         {
-            CLLogger.Instance.Log($"Registering item {itemInstance.GetType().Name}.");
-            if (itemInstance is IGameItem item)
+            if (!(itemInstance is IGameItem item))
+                return;
+            try
             {
+                CLLogger.Instance.Log($"Registering item {itemInstance.GetType().Name}.");
                 ItemManager.Instance.RegisterItem(item);
+                GameEventManager.Instance.Trigger(new ScrapSpawnEvent(item));
             }
-            else
+            catch (Exception ex)
             {
-                CLLogger.Instance.DebugLog("Item does not implement the required interface.");
+                throw new InvalidItemRegistrationException(item, ex);
             }
+            
+        }
+        private class ScrapSpawnEvent(IGameItem item) : ItemSpawnedEvent
+        {
+            public override Vector3 Position => item.Location;
+            public override IGameItem? Item => item;
         }
     }
+
+ 
 }
