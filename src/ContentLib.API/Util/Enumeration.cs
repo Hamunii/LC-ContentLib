@@ -20,20 +20,11 @@ public abstract class Enumeration<TValue> : IComparable where TValue : IComparab
         _displayName = displayName;
     }
 
-    public TValue Value
-    {
-        get { return _value; }
-    }
+    public TValue Value => Value;
 
-    public string DisplayName
-    {
-        get { return _displayName; }
-    }
+    public string DisplayName => _displayName;
 
-    public override string ToString()
-    {
-        return DisplayName;
-    }
+    public override string ToString() => DisplayName;
 
     public static IEnumerable<T> GetAll<T>() where T : Enumeration<TValue>, new()
     {
@@ -61,16 +52,13 @@ public abstract class Enumeration<TValue> : IComparable where TValue : IComparab
             return false;
         }
 
-        var typeMatches = GetType().Equals(obj.GetType());
+        var typeMatches = GetType() == obj.GetType();
         var valueMatches = EqualityComparer<TValue>.Default.Equals(_value, otherValue.Value);
 
         return typeMatches && valueMatches;
     }
 
-    public override int GetHashCode()
-    {
-        return EqualityComparer<TValue>.Default.GetHashCode(_value);
-    }
+    public override int GetHashCode() => EqualityComparer<TValue>.Default.GetHashCode(_value);
 
     public static int AbsoluteDifference(Enumeration<TValue> firstValue, Enumeration<TValue> secondValue)
     {
@@ -103,15 +91,12 @@ public abstract class Enumeration<TValue> : IComparable where TValue : IComparab
 
         if (matchingItem == null)
         {
-            var message = string.Format("'{0}' is not a valid {1} in {2}", value, description, typeof(T));
+            var message = $"'{value}' is not a valid {description} in {typeof(T)}";
             throw new ApplicationException(message);
         }
 
         return matchingItem;
     }
 
-    public int CompareTo(object other)
-    {
-        return Value.CompareTo(((Enumeration<TValue>)other).Value);
-    }
+    public int CompareTo(object other) => Value.CompareTo(((Enumeration<TValue>)other).Value);
 }
