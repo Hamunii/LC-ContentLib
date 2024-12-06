@@ -95,15 +95,15 @@ public abstract class ItemMovedEvent : IItemEvent
     public bool IsCancelled { get; set; }
     
     /// <inheritdoc />
-    public Vector3 Position { get; }
+    public abstract Vector3 Position { get; }
     
     /// <inheritdoc />
-    public IGameItem? Item { get; }
+    public abstract IGameItem? Item { get; }
     
     /// <summary>
-    /// Represents the current velocity of the moved item.
+    /// Represents the destination the item is to be moved to.
     /// </summary>
-    public Vector3 Velocity { get; }
+    public abstract Vector3 Destination { get; }
 }
 
 /// <summary>
